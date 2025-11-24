@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import '../Utils/utils.dart';
 
 class CM {
-  static showSnackBar(BuildContext context, String message, Color color) {
+  static void showSnackBar(BuildContext context, String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -26,12 +26,12 @@ class CM {
     if (value == null || value.isEmpty) {
       return 'Please enter your $fieldName';
     }
-    // if (fieldName == "Email") {
-    //   RegExp regex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    //   if (!regex.hasMatch(value)) {
-    //     return 'Enter a valid email address';
-    //   }
-    // }
+    if (fieldName == "Email") {
+      RegExp regex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+      if (!regex.hasMatch(value)) {
+        return 'Enter a valid email address';
+      }
+    }
     if (fieldName == "Password") {
       if (value.length < 3) {
         return 'Password must be at least 3 characters long';

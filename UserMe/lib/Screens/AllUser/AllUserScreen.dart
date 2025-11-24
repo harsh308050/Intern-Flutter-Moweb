@@ -77,7 +77,7 @@ class _UserScreenState extends State<UserScreen> {
                         final list = getAllUsersModel!.users!;
                         return Expanded(
                           child: ListView.builder(
-                            // physics: ScrollableScrollPhysics(),
+                            physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: list.length,
                             itemBuilder: (context, index) {
@@ -94,8 +94,8 @@ class _UserScreenState extends State<UserScreen> {
                                         ),
                                       ),
                                       child: CircleAvatar(
-                                        // backgroundColor: UIColours.primaryColor,
-                                        child: Image.network(
+                                        backgroundColor: UIColours.white,
+                                        backgroundImage: NetworkImage(
                                           list[index].image.toString(),
                                         ),
                                       ),

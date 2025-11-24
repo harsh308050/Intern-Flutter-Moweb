@@ -3,10 +3,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../Components/CM.dart';
 import '../../Components/CustomButton.dart';
 import '../../Components/CustomTextButton.dart';
 import '../../Components/CustomTextField.dart';
-import '../../components/CM.dart';
 import '../../routes/routes.dart';
 import '../../utils/SharedPrefHelper.dart';
 import '../../utils/utils.dart';
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: UIStrings.emailLabel,
                         prefixIcon: UIIcons.emailIcon,
                         validator: (value) {
-                          return CM.inputvalidator(value, "Email");
+                          return CM.inputvalidator(value, "Username");
                         },
                       ),
                       CM.SbhSub(),

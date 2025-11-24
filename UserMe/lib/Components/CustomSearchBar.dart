@@ -8,12 +8,25 @@ class CustomSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
+      cursorColor: UIColours.primaryColor,
       decoration: InputDecoration(
         fillColor: UIColours.white,
         filled: true,
         hintText: hintText,
+        focusColor: UIColours.primaryColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(UISizes.inputRadius),
+          borderSide: BorderSide(
+            color: UIColours.greyShade.withOpacity(0.5),
+            width: 1.5,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(UISizes.inputRadius),
+          borderSide: BorderSide(color: UIColours.primaryColor, width: 2),
+        ),
         prefixIcon: Icon(Icons.search, color: UIColours.grey),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(UISizes.inputRadius),

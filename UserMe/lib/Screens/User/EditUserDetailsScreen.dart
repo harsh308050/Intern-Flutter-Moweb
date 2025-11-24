@@ -17,7 +17,7 @@ import 'data/repository.dart';
 import 'model/user_res_model.dart';
 
 class EditUserDetailsScreen extends StatefulWidget {
-  String userid = sharedPrefGetUser()?.id.toString() ?? '1';
+  String userid = sharedPrefGetUser()?.id.toString() ?? '';
   EditUserDetailsScreen({super.key, required this.userid});
 
   @override
@@ -72,14 +72,14 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
             Routes.popScreen(context);
             CM.showSnackBar(
               context,
-              "user details edited successfully",
+              "User details edited successfully",
               UIColours.successColor,
             );
           }
           if (state.status == UserDetailsStatus.failed) {
             CM.showSnackBar(
               context,
-              "failed to edit user details",
+              "Failed to edit user details",
               UIColours.errorColor,
             );
           }
