@@ -3,17 +3,26 @@ import '../../../Http/http_helper.dart';
 import '../../../Utils/APIConstant.dart';
 
 class DataSource {
-  final String baseUrl = APIConstant.baseUrl;
-
-  Future<dynamic> getAllUsers() async {
-    final response = await getMethod(endpoint: APIConstant.allusers);
-    log('Login response: $response');
+  Future<dynamic> getAllUsers({
+    String? query,
+    String? order,
+    bool? isTyping,
+  }) async {
+    final buffer = StringBuffer("${APIConstant.allusers}/");
+    if (query != null && query.isNotEmpty || isTyping == true) {
+      buffer.write("${APIConstant.searchQuery}$query");
+    }
+    if (order != null && order.isNotEmpty) {
+      buffer.write("${APIConstant.sorting}$order");
+    }
+    final response = await getMethod(endpoint: buffer.toString());
+    log('response: $response');
     return response;
   }
 
   Future<dynamic> getAllUsersDetailsData(num id) async {
     final response = await getMethod(endpoint: "${APIConstant.allusers}/$id");
-    log('Login response: $response');
+    log('response: $response');
     return response;
   }
 }

@@ -27,123 +27,214 @@ class _UserScreenState extends State<UserScreen> {
     repository: Repository(DataSource()),
   );
   AllUsersModel? getAllUsersModel;
+  String? selectedOrder;
 
   TextEditingController searchController = TextEditingController();
-  late List<Users> filteredUsers = getAllUsersModel?.users ?? [];
+  FocusNode searchFocusNode = FocusNode();
 
   @override
   void initState() {
-    getAllUsersBloc.add(getAllUsersEvent());
     super.initState();
-    searchController.addListener(() {
-      filterUsers(searchController.text);
-    });
-  }
-
-  void filterUsers(String query) {
-    final allUsers = getAllUsersModel?.users ?? [];
-    if (query.isEmpty) {
-      setState(() {
-        filteredUsers = allUsers;
-      });
-    } else {
-      final filtered = allUsers
-          .where(
-            (user) =>
-                user.firstName!.toLowerCase().contains(query.toLowerCase()) ||
-                user.lastName!.toLowerCase().contains(query.toLowerCase()),
-          )
-          .toList();
-      setState(() {
-        filteredUsers = filtered;
-      });
-    }
+    getAllUsersBloc.add(getAllUsersEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: UIColours.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: CustomAppBar(
-          appbarTitle: UIStrings.appbarUsers,
-          suffixIcon: IconButton(icon: UIIcons.filter, onPressed: () {}),
+    return RefreshIndicator(
+      onRefresh: () {
+        searchController.clear();
+        searchFocusNode.unfocus();
+        getAllUsersBloc.add(getAllUsersEvent());
+        selectedOrder = null;
+        setState(() {});
+        return Future.value();
+      },
+      child: Scaffold(
+        backgroundColor: UIColours.white,
+        floatingActionButton: Container(
+          margin: EdgeInsets.only(bottom: 15, right: 10),
+          child: FloatingActionButton(
+            onPressed: () {
+              Routes.navigateToSignupScreen(context);
+            },
+            backgroundColor: UIColours.primaryColor,
+            child: Icon(Icons.add, color: UIColours.white),
+          ),
         ),
-      ),
-      body: BlocListener<AllUsersBloc, getAllUsersAppState>(
-        bloc: getAllUsersBloc,
-        listener: (context, state) => {
-          if (state.status == Status.success)
-            {getAllUsersModel = state.allusers},
-          if (state.status == Status.failed) {print("error")},
-        },
-        child: SafeArea(
-          child: Container(
-            color: UIColours.white,
-            child: Padding(
-              padding: EdgeInsets.all(UISizes.aroundPadding),
-              child: Column(
-                children: [
-                  CustomSearchBar(
-                    hintText: UIStrings.searchbarHint,
-                    controller: searchController,
-                  ),
-                  CM.SbhMain(),
-                  BlocBuilder<AllUsersBloc, getAllUsersAppState>(
-                    bloc: getAllUsersBloc,
-                    builder: (context, state) {
-                      if (state.status == Status.busy &&
-                          getAllUsersModel == null) {
-                        return CustomLoader();
-                      }
-                      if (getAllUsersModel != null) {
-                        final list = getAllUsersModel!.users!;
-                        return Expanded(
-                          child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: filteredUsers.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                spacing: UISizes.subSpacing,
-                                children: [
-                                  CustomTile(
-                                    leadingIcon: Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: UIColours.primaryColor,
-                                          width: 2,
-                                        ),
-                                      ),
-                                      child: CircleAvatar(
-                                        backgroundColor: UIColours.white,
-                                        backgroundImage: NetworkImage(
-                                          filteredUsers[index].image.toString(),
-                                        ),
-                                      ),
-                                    ),
-                                    title:
-                                        "${filteredUsers[index].firstName} ${filteredUsers[index].lastName.toString()}",
-                                    subTitle: list[index].email.toString(),
-                                    trailingIcon: UIIcons.arrowBtnIcon,
-                                  ),
-                                ],
-                              ).onTap(() {
-                                Routes.navigateToAllUsersDetailsScreen(
-                                  context,
-                                  id: filteredUsers[index].id!,
-                                );
-                              });
-                            },
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: CustomAppBar(
+            appbarTitle: UIStrings.appbarUsers,
+            suffixIcon: Column(
+              children: [
+                Stack(
+                  children: [
+                    if (selectedOrder != null)
+                      Positioned(
+                        right: 8,
+                        top: 8,
+                        child: Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: UIColours.primaryColor,
+                            shape: BoxShape.circle,
                           ),
-                        );
-                      }
-                      return Center(child: Text('No Data Found'));
-                    },
-                  ),
-                ],
+                        ),
+                      ),
+                    PopupMenuButton<String>(
+                      color: UIColours.white,
+                      icon: UIIcons.filter,
+
+                      onSelected: (String value) {
+                        selectedOrder = value;
+                        searchController.clear();
+                        searchFocusNode.unfocus();
+                        setState(() {});
+
+                        if (value != 'asc' || value != 'desc') {
+                          getAllUsersBloc.add(getAllUsersEvent());
+                        } else {
+                          getAllUsersBloc.add(getAllUsersEvent(order: value));
+                        }
+                      },
+
+                      itemBuilder: (BuildContext context) => [
+                        PopupMenuItem(
+                          enabled: false,
+                          child: Text(
+                            "Sort by",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: UIColours.primaryColor,
+                            ),
+                          ),
+                        ),
+
+                        PopupMenuItem<String>(
+                          value: 'asc',
+                          child: Text(
+                            'A-Z',
+                            style: TextStyle(
+                              color: selectedOrder == 'asc'
+                                  ? UIColours.primaryColor
+                                  : UIColours.black,
+                            ),
+                          ),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'desc',
+                          child: Text(
+                            'Z-A',
+                            style: TextStyle(
+                              color: selectedOrder == 'desc'
+                                  ? UIColours.primaryColor
+                                  : UIColours.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: BlocListener<AllUsersBloc, getAllUsersAppState>(
+          bloc: getAllUsersBloc,
+          listener: (context, state) => {
+            if (state.status == Status.success)
+              {getAllUsersModel = state.allusers},
+            if (state.status == Status.failed) {print("error")},
+          },
+          child: SafeArea(
+            child: Container(
+              color: UIColours.white,
+              child: Padding(
+                padding: EdgeInsets.all(UISizes.aroundPadding),
+                child: Column(
+                  children: [
+                    CustomSearchBar(
+                      focusNode: searchFocusNode,
+                      hintText: UIStrings.searchbarHint,
+                      controller: searchController,
+                      onClear: () {
+                        searchFocusNode.unfocus();
+                        searchController.clear();
+                        getAllUsersBloc.add(getAllUsersEvent());
+                      },
+                      onChanged: (value) {
+                        selectedOrder = null;
+                        setState(() {});
+                        if (value.isEmpty || value == "") {
+                          getAllUsersBloc.add(getAllUsersEvent());
+                        } else {
+                          getAllUsersBloc.add(getAllUsersEvent(query: value));
+                        }
+                      },
+                    ),
+                    CM.SbhMain(),
+                    BlocBuilder<AllUsersBloc, getAllUsersAppState>(
+                      bloc: getAllUsersBloc,
+                      builder: (context, state) {
+                        if (state.status == Status.busy) {
+                          return Expanded(child: CustomLoader());
+                        }
+                        if (getAllUsersModel != null) {
+                          final list = getAllUsersModel!.users!;
+                          if (list.isEmpty || list.length == 0) {
+                            return Expanded(
+                              child: Center(child: Text("No users found")),
+                            );
+                          }
+                          return Expanded(
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: list.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  spacing: UISizes.subSpacing,
+                                  children: [
+                                    CustomTile(
+                                      leadingIcon: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: UIColours.primaryColor,
+                                            width: 2,
+                                          ),
+                                        ),
+                                        child: CircleAvatar(
+                                          backgroundColor: UIColours.white,
+                                          backgroundImage: NetworkImage(
+                                            list[index].image.toString(),
+                                          ),
+                                        ),
+                                      ),
+                                      title:
+                                          "${list[index].firstName} ${list[index].lastName.toString()}",
+                                      subTitle: list[index].email.toString(),
+                                      trailingIcon: UIIcons.arrowBtnIcon,
+                                    ),
+                                  ],
+                                ).onTap(() {
+                                  Routes.navigateToAllUsersDetailsScreen(
+                                    context,
+                                    id: list[index].id!,
+                                  );
+                                });
+                              },
+                            ),
+                          );
+                        }
+                        if (getAllUsersModel?.users == []) {}
+                        return SizedBox.shrink();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

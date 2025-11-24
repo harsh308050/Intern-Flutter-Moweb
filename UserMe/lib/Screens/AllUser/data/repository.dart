@@ -10,9 +10,17 @@ class Repository {
   final DataSource dataSource;
   Repository(this.dataSource);
 
-  Future<ApiResult<AllUsersModel>> getAllUsers() async {
+  Future<ApiResult<AllUsersModel>> getAllUsers(
+    String? query,
+    String? order,
+    bool? isTyping,
+  ) async {
     try {
-      Response result = await dataSource.getAllUsers();
+      Response result = await dataSource.getAllUsers(
+        query: query,
+        order: order,
+        isTyping: isTyping,
+      );
       if (result.statusCode == 200 || result.statusCode == 201) {
         final data = AllUsersModel.fromJson(jsonDecode(result.body));
         return ApiResult.success(data: data);

@@ -41,4 +41,21 @@ class Repository {
       return ApiResult.failure(error: "Something went wrong ${e.toString()}");
     }
   }
+
+  Future<ApiResult<UserResModel>> addUserDetails({
+    required Map<String, dynamic> params,
+  }) async {
+    try {
+      Response result = await dataSource.addUserDetails(params);
+      if (result.statusCode == 200 || result.statusCode == 201) {
+        final data = UserResModel.fromJson(jsonDecode(result.body));
+        return ApiResult.success(data: data);
+      } else {
+        return ApiResult.failure(error: jsonDecode(result.body)['message']);
+      }
+    } catch (e) {
+      log("Something went wrong ${e.toString()}");
+      return ApiResult.failure(error: "Something went wrong ${e.toString()}");
+    }
+  }
 }

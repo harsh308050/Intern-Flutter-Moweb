@@ -15,7 +15,11 @@ class AllUsersBloc extends Bloc<BlocEvent, getAllUsersAppState> {
   ) async {
     emit(state.copyWith(status: Status.busy));
     try {
-      final allusers = await repository.getAllUsers();
+      final allusers = await repository.getAllUsers(
+        event.query,
+        event.order,
+        event.isTyping,
+      );
 
       emit(state.copyWith(status: Status.busy));
       allusers.when(

@@ -23,4 +23,13 @@ class DataSource {
     log('Edit Profile response: $response');
     return response;
   }
+
+  Future<dynamic> addUserDetails(Map<String, dynamic> params) async {
+    final response = await postMethod(
+      endpoint: APIConstant.allusers,
+      body: params,
+    );
+    log('Add User response: $response');
+    return response;
+  }
 }

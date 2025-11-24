@@ -11,3 +11,9 @@ class EditUserDetailsEvent extends UserDetailsBlocEvent {
 
   EditUserDetailsEvent({required this.id, required this.params});
 }
+
+class AddUserEvent extends UserDetailsBlocEvent {
+  final Map<String, dynamic> params;
+
+  AddUserEvent({required this.params});
+}

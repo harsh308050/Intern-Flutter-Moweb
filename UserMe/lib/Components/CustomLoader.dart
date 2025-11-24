@@ -8,6 +8,8 @@ class CustomLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircularProgressIndicator(color: color ?? UIColours.primaryColor);
+    return Center(
+      child: CircularProgressIndicator(color: color ?? UIColours.primaryColor),
+    );
   }
 }
