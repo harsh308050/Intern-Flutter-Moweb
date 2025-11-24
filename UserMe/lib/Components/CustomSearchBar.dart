@@ -8,10 +8,16 @@ class CustomSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextField(
       controller: controller,
       cursorColor: UIColours.primaryColor,
       decoration: InputDecoration(
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller?.text = "";
+          },
+          icon: Icon(Icons.clear, color: UIColours.grey, size: 18),
+        ),
         fillColor: UIColours.white,
         filled: true,
         hintText: hintText,

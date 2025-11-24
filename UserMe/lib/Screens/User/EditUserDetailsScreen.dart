@@ -16,6 +16,7 @@ import 'data/datasource.dart';
 import 'data/repository.dart';
 import 'model/user_res_model.dart';
 
+// ignore: must_be_immutable
 class EditUserDetailsScreen extends StatefulWidget {
   String userid = sharedPrefGetUser()?.id.toString() ?? '';
   EditUserDetailsScreen({super.key, required this.userid});

@@ -138,6 +138,7 @@ class _AllUsersDetailsScreenState extends State<AllUsersDetailsScreen> {
                                 title: UIStrings.phoneLabel,
                                 value: user?.phone ?? '123-456-7890',
                               ),
+
                               userInfoTile(
                                 icon: Icons.cake_outlined,
                                 title: UIStrings.birthDate,

@@ -29,11 +29,35 @@ class _UserScreenState extends State<UserScreen> {
   AllUsersModel? getAllUsersModel;
 
   TextEditingController searchController = TextEditingController();
+  late List<Users> filteredUsers = getAllUsersModel?.users ?? [];
 
   @override
   void initState() {
     getAllUsersBloc.add(getAllUsersEvent());
     super.initState();
+    searchController.addListener(() {
+      filterUsers(searchController.text);
+    });
+  }
+
+  void filterUsers(String query) {
+    final allUsers = getAllUsersModel?.users ?? [];
+    if (query.isEmpty) {
+      setState(() {
+        filteredUsers = allUsers;
+      });
+    } else {
+      final filtered = allUsers
+          .where(
+            (user) =>
+                user.firstName!.toLowerCase().contains(query.toLowerCase()) ||
+                user.lastName!.toLowerCase().contains(query.toLowerCase()),
+          )
+          .toList();
+      setState(() {
+        filteredUsers = filtered;
+      });
+    }
   }
 
   @override
@@ -79,7 +103,7 @@ class _UserScreenState extends State<UserScreen> {
                           child: ListView.builder(
                             physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: list.length,
+                            itemCount: filteredUsers.length,
                             itemBuilder: (context, index) {
                               return Column(
                                 spacing: UISizes.subSpacing,
@@ -96,12 +120,12 @@ class _UserScreenState extends State<UserScreen> {
                                       child: CircleAvatar(
                                         backgroundColor: UIColours.white,
                                         backgroundImage: NetworkImage(
-                                          list[index].image.toString(),
+                                          filteredUsers[index].image.toString(),
                                         ),
                                       ),
                                     ),
                                     title:
-                                        "${list[index].firstName} ${list[index].lastName.toString()}",
+                                        "${filteredUsers[index].firstName} ${filteredUsers[index].lastName.toString()}",
                                     subTitle: list[index].email.toString(),
                                     trailingIcon: UIIcons.arrowBtnIcon,
                                   ),
@@ -109,7 +133,7 @@ class _UserScreenState extends State<UserScreen> {
                               ).onTap(() {
                                 Routes.navigateToAllUsersDetailsScreen(
                                   context,
-                                  id: list[index].id!,
+                                  id: filteredUsers[index].id!,
                                 );
                               });
                             },

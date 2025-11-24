@@ -56,4 +56,14 @@ class AllUsersBloc extends Bloc<BlocEvent, getAllUsersAppState> {
       emit(state.copyWith(status: Status.failed));
     }
   }
+
+  // Future<void> onInitialData(
+  //   initialDataEvent event,
+  //   Emitter<getAllUsersAppState> emit,
+  // ) async {
+  //   emit(state.copyWith(status: Status.busy));
+  //   try {} catch (e) {
+  //     emit(state.copyWith(status: Status.failed));
+  //   }
+  // }
 }

@@ -116,7 +116,7 @@ class UIIcons {
 
   static Icon filter = Icon(
     Icons.tune_outlined,
-    color: UIColours.greyShade,
+    color: UIColours.primaryColor,
     size: 25,
   );
 

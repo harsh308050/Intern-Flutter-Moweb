@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../utils/utils.dart';
 
 Widget userInfoTile({
@@ -31,7 +32,7 @@ Widget userInfoTile({
               ),
               Text(
                 value,
-                overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.visible,
                 style: TextStyle(
                   fontSize: UISizes.tileTitle - 1,
                   color: UIColours.black,

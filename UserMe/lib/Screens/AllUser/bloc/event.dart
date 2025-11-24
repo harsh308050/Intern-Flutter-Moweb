@@ -9,3 +9,7 @@ class getAllUsersDetailsEvent extends BlocEvent {
   final num id;
   getAllUsersDetailsEvent({required this.id});
 }
+
+// class initialDataEvent extends BlocEvent {}
+
+// class loadMoreDataEvent extends BlocEvent {}
