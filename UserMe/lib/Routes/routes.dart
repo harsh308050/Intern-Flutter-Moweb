@@ -18,10 +18,12 @@ class Routes {
     );
   }
 
-  static navigateToSignupScreen(BuildContext context) {
+  static navigateToSignupScreen(BuildContext context, bool isFromAddUser) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const SignupScreen()),
+      MaterialPageRoute(
+        builder: (context) => SignupScreen(isFromAddUser: isFromAddUser),
+      ),
     );
   }
 

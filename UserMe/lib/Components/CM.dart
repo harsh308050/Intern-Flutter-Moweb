@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import '../Utils/utils.dart';
 
 class CM {
-  static void showSnackBar(BuildContext context, String message, Color color) {
+  static showSnackBar(BuildContext context, String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(

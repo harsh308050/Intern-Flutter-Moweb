@@ -8,6 +8,7 @@ import '../../components/CM.dart';
 import '../../components/CustomSearchBar.dart';
 import '../../components/CustomTile.dart';
 import '../../routes/routes.dart';
+import '../Auth/signupscreen.dart';
 import 'bloc/bloc.dart';
 import 'bloc/event.dart';
 import 'bloc/state.dart';
@@ -36,6 +37,7 @@ class _UserScreenState extends State<UserScreen> {
   void initState() {
     super.initState();
     getAllUsersBloc.add(getAllUsersEvent());
+    searchFocusNode.unfocus();
   }
 
   @override
@@ -55,7 +57,7 @@ class _UserScreenState extends State<UserScreen> {
           margin: EdgeInsets.only(bottom: 15, right: 10),
           child: FloatingActionButton(
             onPressed: () {
-              Routes.navigateToSignupScreen(context);
+              Routes.navigateToSignupScreen(context, true);
             },
             backgroundColor: UIColours.primaryColor,
             child: Icon(Icons.add, color: UIColours.white),

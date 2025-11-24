@@ -26,7 +26,7 @@ class DataSource {
 
   Future<dynamic> addUserDetails(Map<String, dynamic> params) async {
     final response = await postMethod(
-      endpoint: APIConstant.allusers,
+      endpoint: APIConstant.signup,
       body: params,
     );
     log('Add User response: $response');

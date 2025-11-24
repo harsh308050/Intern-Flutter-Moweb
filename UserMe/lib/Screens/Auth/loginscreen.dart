@@ -18,6 +18,7 @@ import 'bloc/state.dart';
 import 'data/datasource.dart';
 import 'data/repository.dart';
 import 'model/user_model.dart';
+import 'signupscreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -169,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonText: UIStrings.signupButton,
                             onTextButtonPressed: () {
                               FocusScope.of(context).unfocus();
-                              Routes.navigateToSignupScreen(context);
+                              Routes.navigateToSignupScreen(context, false);
                             },
                           ),
                         ],

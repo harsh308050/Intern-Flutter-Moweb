@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class UIStrings {
   static String loginTitle = "Log in to your account";
   static String signupTitle = "Create your account";
+  static String addUserTitle = "Add a new user";
   static String signupSubTitle = "Join our community and get started";
   static String newOnApp = "New to Our App?";
   static String haveAccount = "Already have an account?";
 
   static String emailHint = "Enter your email";
+  static String usernameHint = "Enter your username";
   static String passwordHint = "Enter your password";
   static String fnameHint = "John";
   static String lnameHint = "Doe";
@@ -29,6 +31,8 @@ class UIStrings {
   static String loginButton = "Login";
   static String signupButton = "Create Account";
   static String editBtn = "Edit";
+  static String addUserBtn = "Add User";
+
   static String editprofileButton = "Save Changes";
   static String forgotPassword = "Forgot Password?";
 
