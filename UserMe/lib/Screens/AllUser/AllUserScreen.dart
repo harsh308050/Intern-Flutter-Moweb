@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Components/CustomAppBar.dart';
@@ -30,14 +29,32 @@ class _UserScreenState extends State<UserScreen> {
   AllUsersModel? getAllUsersModel;
   String? selectedOrder;
 
+  ValueNotifier<int> scrollNotifier = ValueNotifier<int>(-1);
+
   TextEditingController searchController = TextEditingController();
   FocusNode searchFocusNode = FocusNode();
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     getAllUsersBloc.add(getAllUsersEvent());
     searchFocusNode.unfocus();
+    scrollController.addListener(scrollPosition);
+  }
+
+  scrollPosition() {
+    final max = scrollController.position.maxScrollExtent;
+    final min = scrollController.position.minScrollExtent;
+    final current = scrollController.position.pixels;
+    final mid = max / 2;
+    if (current == max || current == min) {
+      scrollNotifier.value = -1;
+    } else if (current > mid) {
+      scrollNotifier.value = 1;
+    } else if (current < mid) {
+      scrollNotifier.value = 0;
+    }
   }
 
   void clearSearch() {
@@ -49,16 +66,61 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: UIColours.white,
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(bottom: 15, right: 10),
-        child: FloatingActionButton(
-          onPressed: () {
-            searchFocusNode.unfocus();
-            Routes.navigateToSignupScreen(context, true);
-          },
-          backgroundColor: UIColours.primaryColor,
-          child: Icon(Icons.add, color: UIColours.white),
-        ),
+      floatingActionButton: Row(
+        mainAxisAlignment: .spaceBetween,
+        crossAxisAlignment: .end,
+
+        children: [
+          ValueListenableBuilder(
+            valueListenable: scrollNotifier,
+            builder: (context, value, child) {
+              return Container(
+                margin: EdgeInsets.only(left: UISizes.aroundPadding * 2),
+                child: AnimatedOpacity(
+                  opacity: value == -1 ? 0 : 1,
+                  duration: Duration(milliseconds: 200),
+                  child: FloatingActionButton.small(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    onPressed: () {
+                      if (value == 1) {
+                        scrollController.animateTo(
+                          scrollController.position.minScrollExtent,
+                          duration: Duration(milliseconds: 800),
+                          curve: Curves.easeInOut,
+                        );
+                      } else if (value == 0) {
+                        scrollController.animateTo(
+                          scrollController.position.maxScrollExtent,
+                          duration: Duration(milliseconds: 800),
+                          curve: Curves.easeInOut,
+                        );
+                      }
+                    },
+
+                    heroTag: "btn1",
+                    backgroundColor: UIColours.primaryColor,
+                    child: Icon(
+                      value == 1 ? Icons.arrow_upward : Icons.arrow_downward,
+                      color: UIColours.white,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          FloatingActionButton(
+            heroTag: "btn2",
+            onPressed: () {
+              searchFocusNode.unfocus();
+              Routes.navigateToSignupScreen(context, true);
+            },
+            backgroundColor: UIColours.primaryColor,
+            child: Icon(Icons.add, color: UIColours.white),
+          ),
+        ],
       ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
@@ -198,6 +260,7 @@ class _UserScreenState extends State<UserScreen> {
                             return Future.value();
                           },
                           child: ListView.builder(
+                            controller: scrollController,
                             physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: list.length,
