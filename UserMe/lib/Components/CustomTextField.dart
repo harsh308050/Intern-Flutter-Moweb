@@ -10,6 +10,7 @@ class CustomTextfield extends StatelessWidget {
   final TextInputType? keyboardType;
   final VoidCallback? onSuffixPressed;
   final IconData? suffixIcon;
+  final num? maxLength;
   final bool obscureText;
   final String? Function(String?)? validator;
   const CustomTextfield({
@@ -19,6 +20,7 @@ class CustomTextfield extends StatelessWidget {
     required this.labelText,
     required this.controller,
     this.keyboardType,
+    this.maxLength,
     this.onSuffixPressed,
     this.prefixIcon,
     this.suffixIcon,
@@ -47,7 +49,10 @@ class CustomTextfield extends StatelessWidget {
           cursorColor: UIColours.primaryColor,
           obscureText: obscureText,
           validator: validator,
+          maxLength: maxLength != null ? maxLength?.toInt() : null,
+
           decoration: InputDecoration(
+            counterText: "",
             contentPadding: EdgeInsets.symmetric(
               vertical: UISizes.verticalInputPadding,
               horizontal: UISizes.horizontalInputPadding,
@@ -59,6 +64,10 @@ class CustomTextfield extends StatelessWidget {
               borderSide: BorderSide(color: UIColours.primaryColor, width: 2),
             ),
             hintText: hintText,
+            hintStyle: TextStyle(
+              fontSize: UISizes.inputFontSize,
+              color: UIColours.grey.withOpacity(0.4),
+            ),
             prefixIcon: prefixIcon,
             suffixIcon: IconButton(
               onPressed: onSuffixPressed,

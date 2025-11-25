@@ -12,8 +12,9 @@ class UIStrings {
   static String usernameHint = "Enter your username";
   static String passwordHint = "Enter your password";
   static String fnameHint = "John";
-  static String lnameHint = "Doe";
-  static String ageHint = "eg. 25";
+  static String lnameHint = "Type here...";
+  static String typehereHint = "Type here...";
+  static String ageHint = "Enter your age";
   static String emailformatHint = "you@example.com";
   static String passwordformatHint = "Enter a Strong Password";
   static String emailLabel = "Email";
@@ -119,7 +120,7 @@ class UIIcons {
   );
 
   static Icon filter = Icon(
-    Icons.tune_outlined,
+    Icons.sort_by_alpha_rounded,
     color: UIColours.black,
     size: 25,
   );

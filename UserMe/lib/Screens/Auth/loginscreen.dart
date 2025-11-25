@@ -18,7 +18,6 @@ import 'bloc/state.dart';
 import 'data/datasource.dart';
 import 'data/repository.dart';
 import 'model/user_model.dart';
-import 'signupscreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -137,14 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         buttonText: UIStrings.loginButton,
                         onButtonPressed: () {
                           FocusScope.of(context).unfocus();
-                          if (emailController.text.isEmpty) {
-                            focusNodeRoute(emailFocusNode, context);
-                            return;
-                          }
-                          if (passwordController.text.isEmpty) {
-                            focusNodeRoute(passwordFocusNode, context);
-                            return;
-                          }
+
                           if (formKey.currentState!.validate()) {
                             userBloc.add(
                               UserEvent(
@@ -152,6 +144,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                 password: passwordController.text,
                               ),
                             );
+                          } else {
+                            if (emailController.text.isEmpty ||
+                                CM.inputvalidator(
+                                      emailController.text,
+                                      "Email",
+                                    ) !=
+                                    null) {
+                              focusNodeRoute(emailFocusNode, context);
+                            } else if (passwordController.text.isEmpty ||
+                                CM.inputvalidator(
+                                      passwordController.text,
+                                      "Password",
+                                    ) !=
+                                    null) {
+                              focusNodeRoute(passwordFocusNode, context);
+                            }
                           }
                         },
                       ),
