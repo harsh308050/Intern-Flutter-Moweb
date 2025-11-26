@@ -259,44 +259,62 @@ class _UserScreenState extends State<UserScreen> {
                             setState(() {});
                             return Future.value();
                           },
-                          child: ListView.builder(
-                            controller: scrollController,
+                          child: ReorderableListView.builder(
+                            onReorder: (oldIndex, newIndex) {
+                              setState(() {
+                                if (oldIndex < newIndex) {
+                                  newIndex -= 1;
+                                }
+                                final item = list.removeAt(oldIndex);
+                                ;
+                                list.insert(newIndex, item);
+                              });
+                            },
+                            scrollController: scrollController,
                             physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: list.length,
                             itemBuilder: (context, index) {
-                              return Column(
-                                spacing: UISizes.subSpacing,
-                                children: [
-                                  CustomTile(
-                                    leadingIcon: Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: UIColours.primaryColor,
-                                          width: 2,
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: UIColours.white,
+                                ),
+                                key: ValueKey(list[index].id),
+                                child:
+                                    Column(
+                                      spacing: UISizes.subSpacing,
+                                      children: [
+                                        CustomTile(
+                                          leadingIcon: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: UIColours.primaryColor,
+                                                width: 2,
+                                              ),
+                                            ),
+                                            child: CircleAvatar(
+                                              backgroundColor: UIColours.white,
+                                              backgroundImage: NetworkImage(
+                                                list[index].image.toString(),
+                                              ),
+                                            ),
+                                          ),
+                                          title:
+                                              "${list[index].firstName} ${list[index].lastName.toString()}",
+                                          subTitle: list[index].email
+                                              .toString(),
+                                          trailingIcon: UIIcons.arrowBtnIcon,
                                         ),
-                                      ),
-                                      child: CircleAvatar(
-                                        backgroundColor: UIColours.white,
-                                        backgroundImage: NetworkImage(
-                                          list[index].image.toString(),
-                                        ),
-                                      ),
-                                    ),
-                                    title:
-                                        "${list[index].firstName} ${list[index].lastName.toString()}",
-                                    subTitle: list[index].email.toString(),
-                                    trailingIcon: UIIcons.arrowBtnIcon,
-                                  ),
-                                ],
-                              ).onTap(() {
-                                searchFocusNode.unfocus();
-                                Routes.navigateToAllUsersDetailsScreen(
-                                  context,
-                                  id: list[index].id!,
-                                );
-                              });
+                                      ],
+                                    ).onTap(() {
+                                      searchFocusNode.unfocus();
+                                      Routes.navigateToAllUsersDetailsScreen(
+                                        context,
+                                        id: list[index].id!,
+                                      );
+                                    }),
+                              );
                             },
                           ),
                         ),
