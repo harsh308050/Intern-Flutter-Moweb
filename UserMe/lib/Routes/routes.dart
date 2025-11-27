@@ -1,6 +1,9 @@
+import 'package:UserMe/Screens/Auth/AuthScreen.dart';
 import 'package:flutter/material.dart';
 import '../Screens/AllUser/AllUsersDetailsScreen.dart';
 import '../Screens/Home/homepage.dart';
+import '../Screens/Splash/OnBoarding.dart';
+import '../Screens/Splash/SplashScreen.dart';
 import '../Screens/User/EditUserDetailsScreen.dart';
 import '../Screens/User/UserDetailsScreen.dart';
 import '../screens/auth/loginscreen.dart';
@@ -9,6 +12,27 @@ import '../screens/auth/signupscreen.dart';
 class Routes {
   static popScreen(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  static navigateToSplashScreen(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const SplashScreen()),
+    );
+  }
+
+  static navigateToOnboardingScreen(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const OnBoarding()),
+    );
+  }
+
+  static navigateToAuthScreen(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const AuthScreen()),
+    );
   }
 
   static navigateToLoginScreen(BuildContext context) {

@@ -130,7 +130,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onTap: () {
                           sharedPrefClearAllData();
                           log("Logged out");
-                          Routes.navigateToLoginScreen(context);
+                          Routes.navigateToAuthScreen(context);
                         },
                         leadingIcon: UIIcons.logout,
                         title: UIStrings.tileLogout,

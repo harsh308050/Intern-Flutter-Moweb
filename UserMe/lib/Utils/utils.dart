@@ -48,7 +48,7 @@ class UIStrings {
   static String tileLogout = "Logout";
   static String tileDelete = "Delete Account";
 
-  static String loginFailed = "Login failed. Please check your credentials.";
+  static String loginFailed = "Login failed. Please check your credentials";
 }
 
 class UIColours {

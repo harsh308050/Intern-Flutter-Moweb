@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context, state) => SafeArea(
             child: Padding(
               padding: EdgeInsets.only(
-                top: UISizes.aroundPadding * 5,
+                top: UISizes.aroundPadding,
                 left: UISizes.aroundPadding,
                 right: UISizes.aroundPadding,
               ),

@@ -30,7 +30,6 @@ class AllUsersBloc extends Bloc<BlocEvent, getAllUsersAppState> {
           emit(state.copyWith(status: Status.failed));
         },
       );
-      emit(state.copyWith(status: Status.none));
     } catch (e) {
       emit(state.copyWith(status: Status.busy));
       emit(state.copyWith(status: Status.failed));

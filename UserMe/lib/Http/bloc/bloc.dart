@@ -8,6 +8,8 @@ import 'state.dart';
 class ConnectionBloc extends Bloc<ConnectionEvent, ConnectivityState> {
   late StreamSubscription<List<ConnectivityResult>> connectivitySubscription;
 
+  bool firstCheckDone = false;
+
   ConnectionBloc() : super(ConnectionInitialState()) {
     connectivitySubscription = Connectivity().onConnectivityChanged.listen((
       List<ConnectivityResult> result,
@@ -26,6 +28,10 @@ class ConnectionBloc extends Bloc<ConnectionEvent, ConnectivityState> {
     Emitter<ConnectivityState> emit,
   ) async {
     emit(state.copyWith(status: Status.busy));
+    if (!firstCheckDone) {
+      firstCheckDone = true;
+      return;
+    }
 
     if (event.isConnected) {
       emit(state.copyWith(status: Status.success));

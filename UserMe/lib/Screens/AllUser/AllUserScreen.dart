@@ -76,6 +76,11 @@ class _UserScreenState extends State<UserScreen> {
             builder: (context, value, child) {
               return Container(
                 margin: EdgeInsets.only(left: UISizes.aroundPadding * 2),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: UIColours.grey.withOpacity(0.4)),
+                  ),
+                ),
                 child: AnimatedOpacity(
                   opacity: value == -1 ? 0 : 1,
                   duration: Duration(milliseconds: 200),
@@ -202,7 +207,7 @@ class _UserScreenState extends State<UserScreen> {
           if (state.status == Status.success)
             {getAllUsersModel = state.allusers},
 
-          if (state.status == Status.failed) {log("Failed to fetch users")},
+          if (state.status == Status.failed) {log("Failed to Fetch Users")},
         },
         child: SafeArea(
           child: Container(
@@ -238,6 +243,21 @@ class _UserScreenState extends State<UserScreen> {
                   builder: (context, state) {
                     if (state.status == Status.busy) {
                       return Expanded(child: CustomLoader());
+                    }
+                    if (state.status == Status.failed) {
+                      return Expanded(
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {
+                              getAllUsersBloc.add(getAllUsersEvent());
+                            },
+                            icon: Icon(
+                              Icons.refresh_outlined,
+                              color: UIColours.primaryColor,
+                            ),
+                          ),
+                        ),
+                      );
                     }
                     if (getAllUsersModel != null) {
                       final list = getAllUsersModel!.users!;
