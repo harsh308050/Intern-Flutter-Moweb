@@ -10,7 +10,7 @@ class DataSource {
     String? order,
     bool? isTyping,
   }) async {
-    final buffer = StringBuffer("${APIConstant.allusers}/");
+    final buffer = StringBuffer("${APIConstant.allusers}");
     if (query.isNotNullOrEmpty || isTyping == true) {
       buffer.write("${APIConstant.searchQuery}$query");
     }

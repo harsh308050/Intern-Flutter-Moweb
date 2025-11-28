@@ -57,123 +57,142 @@ class _AllUsersDetailsScreenState extends State<AllUsersDetailsScreen> {
           child: CustomAppBar(appbarTitle: UIStrings.appbarUserDetails),
         ),
 
-        body: BlocBuilder<AllUsersBloc, getAllUsersAppState>(
-          bloc: userDetailsBloc,
-          builder: (context, state) => state.status == Status.busy
-              ? Center(child: CustomLoader())
-              : SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(UISizes.aroundPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
+        body: Column(
+          children: [
+            BlocBuilder<AllUsersBloc, getAllUsersAppState>(
+              bloc: userDetailsBloc,
+              builder: (context, state) => state.status == Status.busy
+                  ? Expanded(child: Center(child: CustomLoader()))
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.all(UISizes.aroundPadding),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: UIColours.grey,
-                                  border: Border.all(
-                                    color: UIColours.grey,
-                                    width: 2,
-                                  ),
+                              Center(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: UIColours.grey,
+                                        border: Border.all(
+                                          color: UIColours.grey,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      child: CircleAvatar(
+                                        radius: 60,
+                                        backgroundColor: UIColours.white,
+                                        backgroundImage:
+                                            (user?.image.isNotNullOrEmpty ??
+                                                false)
+                                            ? NetworkImage(user!.image!)
+                                            : null,
+                                      ),
+                                    ),
+                                    SizedBox(height: UISizes.mainSpacing * 2),
+                                    Text(
+                                      '${user?.firstName ?? "harsh"} ${user?.lastName ?? "parmar"}',
+                                      style: TextStyle(
+                                        fontSize: UISizes.tileTitle + 5,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SbhMin(),
+                                    Text(
+                                      user?.email ?? 'harsh308050@gmail.com',
+                                      style: TextStyle(
+                                        color: UIColours.grey,
+                                        fontSize: UISizes.inputFontSize,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                child: CircleAvatar(
-                                  radius: 60,
-                                  backgroundColor: UIColours.white,
-                                  backgroundImage:
-                                      (user?.image.isNotNullOrEmpty ?? false)
-                                      ? NetworkImage(user!.image!)
-                                      : null,
-                                ),
-                              ),
-                              SizedBox(height: UISizes.mainSpacing * 2),
-                              Text(
-                                '${user?.firstName ?? "harsh"} ${user?.lastName ?? "parmar"}',
-                                style: TextStyle(
-                                  fontSize: UISizes.tileTitle + 5,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SbhMin(),
-                              Text(
-                                user?.email ?? 'harsh308050@gmail.com',
-                                style: TextStyle(
-                                  color: UIColours.grey,
-                                  fontSize: UISizes.inputFontSize,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SbhMain(),
-                        SbhMain(),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: UISizes.subSpacing + 5,
-                          ),
-                          child: Column(
-                            children: [
-                              userInfoTile(
-                                icon: Icons.person_outline,
-                                title: UIStrings.fname,
-                                value: user?.firstName ?? 'Harsh',
-                              ),
-                              userInfoTile(
-                                icon: Icons.tag_outlined,
-                                title: UIStrings.username,
-                                value: user?.username ?? 'harsh308050',
-                              ),
-                              userInfoTile(
-                                icon: Icons.wc_outlined,
-                                title: UIStrings.gender,
-                                value: user?.gender ?? 'Male',
-                              ),
-                              userInfoTile(
-                                icon: Icons.email_outlined,
-                                title: UIStrings.emailLabel,
-                                value: user?.email ?? 'harsh308050@gmail.com',
-                              ),
-                              userInfoTile(
-                                icon: Icons.phone_outlined,
-                                title: UIStrings.phoneLabel,
-                                value: user?.phone ?? '123-456-7890',
                               ),
 
-                              userInfoTile(
-                                icon: Icons.cake_outlined,
-                                title: UIStrings.birthDate,
-                                value: user?.birthDate ?? '01/01/2000',
-                              ),
-                              userInfoTile(
-                                icon: Icons.flag_outlined,
-                                title: UIStrings.country,
-                                value: user?.address?.country ?? 'India',
-                              ),
-                              userInfoTile(
-                                icon: Icons.height_outlined,
-                                title: "Height",
-                                value: user?.height.toString() ?? '01/01/2000',
-                              ),
-                              userInfoTile(
-                                icon: Icons.monitor_weight_outlined,
-                                title: "Weight",
-                                value: user?.weight.toString() ?? '01/01/2000',
+                              SbhMain(),
+                              SbhMain(),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: UISizes.subSpacing + 5,
+                                ),
+                                child: Column(
+                                  children: [
+                                    userInfoTile(
+                                      icon: Icons.person_outline,
+                                      title: UIStrings.fname,
+                                      value: user?.firstName ?? 'Harsh',
+                                    ),
+                                    userInfoTile(
+                                      icon: Icons.tag_outlined,
+                                      title: UIStrings.username,
+                                      value: user?.username ?? 'harsh308050',
+                                    ),
+                                    userInfoTile(
+                                      icon: Icons.wc_outlined,
+                                      title: UIStrings.gender,
+                                      value: user?.gender ?? 'Male',
+                                    ),
+                                    userInfoTile(
+                                      icon: Icons.email_outlined,
+                                      title: UIStrings.emailLabel,
+                                      value:
+                                          user?.email ??
+                                          'harsh308050@gmail.com',
+                                    ),
+                                    userInfoTile(
+                                      icon: Icons.phone_outlined,
+                                      title: UIStrings.phoneLabel,
+                                      value: user?.phone ?? '123-456-7890',
+                                    ),
+
+                                    userInfoTile(
+                                      icon: Icons.cake_outlined,
+                                      title: UIStrings.birthDate,
+                                      value: user?.birthDate ?? '01/01/2000',
+                                    ),
+                                    userInfoTile(
+                                      icon: Icons.flag_outlined,
+                                      title: UIStrings.country,
+                                      value: user?.address?.country ?? 'India',
+                                    ),
+                                    userInfoTile(
+                                      icon: Icons.height_outlined,
+                                      title: "Height",
+                                      value:
+                                          user?.height.toString() ??
+                                          '01/01/2000',
+                                    ),
+                                    userInfoTile(
+                                      icon: Icons.monitor_weight_outlined,
+                                      title: "Weight",
+                                      value:
+                                          user?.weight.toString() ??
+                                          '01/01/2000',
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ),
-                        CustomButton(
-                          buttonText: "Add to Favorites",
-                          onButtonPressed: () {
-                            Navigator.pop(context, user?.firstName);
-                          },
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
+            ),
+            SbhMain(),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 20.0, left: 16.0, right: 16.0),
+              child: CustomButton(
+                buttonText: "Add to Favorites",
+                onButtonPressed: () {
+                  Navigator.pop(context, user?.firstName);
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

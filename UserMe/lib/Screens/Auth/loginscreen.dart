@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
               state.user?.accessToken,
             );
             log('Token saved: $token');
-            callNextScreen(context, Homepage());
+            callNextScreenAndClearStack(context, Homepage());
           } else if (state.status == Status.failed) {
             showSnackBar(context, UIStrings.loginFailed, UIColours.errorColor);
           }
@@ -173,10 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonText: UIStrings.signupButton,
                             onTextButtonPressed: () {
                               FocusScope.of(context).unfocus();
-                              callNextScreenAndClearStack(
-                                context,
-                                SignupScreen(),
-                              );
+                              callNextScreen(context, SignupScreen());
                             },
                           ),
                         ],

@@ -50,7 +50,6 @@ class CustomTextfield extends StatelessWidget {
           obscureText: obscureText,
           validator: validator,
           maxLength: maxLength != null ? maxLength?.toInt() : null,
-
           decoration: InputDecoration(
             counterText: "",
             contentPadding: EdgeInsets.symmetric(
@@ -73,6 +72,7 @@ class CustomTextfield extends StatelessWidget {
               onPressed: onSuffixPressed,
               icon: Icon(suffixIcon),
             ),
+
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(UISizes.inputRadius),
@@ -88,6 +88,7 @@ class CustomTextfield extends StatelessWidget {
               borderRadius: BorderRadius.circular(UISizes.inputRadius),
             ),
           ),
+          autovalidateMode: .onUserInteraction,
         ),
       ],
     );
