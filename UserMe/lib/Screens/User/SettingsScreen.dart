@@ -1,13 +1,15 @@
 import 'dart:developer';
+import 'package:UserMe/Screens/Auth/AuthScreen.dart';
+import 'package:UserMe/Screens/User/UserDetailsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../Utils/utils.dart';
-import '../../components/CM.dart';
+import '../../Components/CM.dart';
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomTile.dart';
 import '../../main.dart';
-import '../../routes/routes.dart';
+
 import '../../utils/SharedPrefHelper.dart';
 import 'bloc/bloc.dart';
 import 'bloc/event.dart';
@@ -49,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           user = state.userdetails;
           log("User details loaded from API");
         } else if (state.status == UserDetailsStatus.failed) {
-          CM.showSnackBar(
+          showSnackBar(
             context,
             "Failed to load user details",
             UIColours.errorColor,
@@ -108,15 +110,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       CustomTile(
                         leadingIcon: UIIcons.fnameIcon,
                         title: UIStrings.tileProfile,
-                        trailingIcon: UIIcons.arrowBtnIcon,
+                        // trailingIcon: UIIcons.arrowBtnIcon,
                         onTap: () {
-                          Routes.navigateToUserDetails(context);
+                          callNextScreen(context, UserDetailsScreen());
                         },
                       ),
                       CustomTile(
                         leadingIcon: UIIcons.tileThemeIcon,
                         title: UIStrings.tileTheme,
-                        trailingIcon: UIIcons.arrowBtnIcon,
+                        // trailingIcon: UIIcons.arrowBtnIcon,
                       ),
                       Text(
                         UIStrings.settingsAccount,
@@ -130,7 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onTap: () {
                           sharedPrefClearAllData();
                           log("Logged out");
-                          Routes.navigateToAuthScreen(context);
+                          callNextScreenAndClearStack(context, AuthScreen());
                         },
                         leadingIcon: UIIcons.logout,
                         title: UIStrings.tileLogout,

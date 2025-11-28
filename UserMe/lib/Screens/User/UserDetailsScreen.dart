@@ -1,3 +1,5 @@
+import 'package:UserMe/Screens/User/EditUserDetailsScreen.dart';
+import 'package:UserMe/Utils/extensions.dart';
 import 'package:flutter/material.dart';
 import '../../Components/CM.dart';
 import '../../Components/CustomTextButton.dart';
@@ -5,7 +7,7 @@ import '../../Components/CustomUserDetailsTile.dart';
 import '../../Utils/utils.dart';
 import '../../utils/SharedPrefHelper.dart';
 import '../../components/CustomAppBar.dart';
-import '../../routes/routes.dart';
+
 import 'model/user_res_model.dart';
 
 class UserDetailsScreen extends StatefulWidget {
@@ -28,7 +30,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           suffixIcon: CustomTextButton(
             buttonText: UIStrings.editBtn,
             onTextButtonPressed: () {
-              Routes.navigateToEditUserDetailsScreen(context, user: user);
+              callNextScreen(
+                context,
+                EditUserDetailsScreen(userid: user?.id.toString() ?? ''),
+              );
             },
           ),
           appbarTitle: UIStrings.appbarUserDetails,
@@ -52,8 +57,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       child: CircleAvatar(
                         radius: 60,
                         backgroundColor: UIColours.white,
-                        backgroundImage:
-                            (user?.image != null && user!.image!.isNotEmpty)
+                        backgroundImage: (user?.image.isNotNullOrEmpty ?? false)
                             ? NetworkImage(user!.image!)
                             : null,
                         child: (user?.image == null || user!.image!.isEmpty)
@@ -73,7 +77,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    CM.SbhMin(),
+                    SbhMin(),
                     Text(
                       user?.email ?? '',
                       style: TextStyle(
@@ -84,8 +88,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   ],
                 ),
               ),
-              CM.SbhMain(),
-              CM.SbhMain(),
+              SbhMain(),
+              SbhMain(),
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: UISizes.subSpacing + 5,

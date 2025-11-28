@@ -1,7 +1,9 @@
 import 'package:UserMe/Components/CustomButton.dart';
-import 'package:UserMe/Routes/routes.dart';
+import 'package:UserMe/Screens/Auth/AuthScreen.dart';
 import 'package:UserMe/Utils/utils.dart';
 import 'package:flutter/material.dart';
+
+import '../../Components/CM.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
@@ -108,7 +110,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   ),
                 ),
                 onPressed: () {
-                  Routes.navigateToAuthScreen(context);
+                  callNextScreenAndClearStack(context, AuthScreen());
                 },
                 child: Text(
                   "Skip",

@@ -1,4 +1,7 @@
 import 'dart:developer';
+import 'package:UserMe/Components/CM.dart';
+import 'package:UserMe/Screens/AllUser/AllUsersDetailsScreen.dart';
+import 'package:UserMe/Screens/Auth/signupscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Components/CustomAppBar.dart';
@@ -7,7 +10,7 @@ import '../../Utils/extensions.dart';
 import '../../Utils/utils.dart';
 import '../../components/CustomSearchBar.dart';
 import '../../components/CustomTile.dart';
-import '../../routes/routes.dart';
+
 import 'bloc/bloc.dart';
 import 'bloc/event.dart';
 import 'bloc/state.dart';
@@ -55,6 +58,14 @@ class _UserScreenState extends State<UserScreen> {
     } else if (current < mid) {
       scrollNotifier.value = 0;
     }
+  }
+
+  String? username = "";
+
+  void handleChildCallback(String? firstName) {
+    setState(() {
+      username = firstName;
+    });
   }
 
   void clearSearch() {
@@ -120,7 +131,7 @@ class _UserScreenState extends State<UserScreen> {
             heroTag: "btn2",
             onPressed: () {
               searchFocusNode.unfocus();
-              Routes.navigateToSignupScreen(context, true);
+              callNextScreen(context, SignupScreen(isFromAddUser: true));
             },
             backgroundColor: UIColours.primaryColor,
             child: Icon(Icons.add, color: UIColours.white),
@@ -133,7 +144,7 @@ class _UserScreenState extends State<UserScreen> {
           appbarTitle: UIStrings.appbarUsers,
           suffixIcon: Stack(
             children: [
-              if (selectedOrder != null)
+              if (selectedOrder.isNotNull)
                 Positioned(
                   right: 8,
                   top: 8,
@@ -230,13 +241,26 @@ class _UserScreenState extends State<UserScreen> {
                   },
                   onChanged: (value) {
                     selectedOrder = null;
-                    if (value.isEmpty || value == "") {
+                    if (value.isEmpty) {
                       getAllUsersBloc.add(getAllUsersEvent());
                     } else {
                       getAllUsersBloc.add(getAllUsersEvent(query: value));
                     }
                     setState(() {});
                   },
+                ),
+                AnimatedSize(
+                  curve: Curves.easeInOut,
+                  duration: Duration(milliseconds: 600),
+                  child: username.isNotEmpty
+                      ? Text(
+                          "You added $username to Favorite users",
+                          style: TextStyle(
+                            fontSize: UISizes.tileSubtitle,
+                            color: UIColours.grey,
+                          ),
+                        )
+                      : SizedBox(),
                 ),
                 BlocBuilder<AllUsersBloc, getAllUsersAppState>(
                   bloc: getAllUsersBloc,
@@ -305,6 +329,7 @@ class _UserScreenState extends State<UserScreen> {
                                       spacing: UISizes.subSpacing,
                                       children: [
                                         CustomTile(
+                                          showTrailingIcon: true,
                                           leadingIcon: Container(
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
@@ -324,15 +349,53 @@ class _UserScreenState extends State<UserScreen> {
                                               "${list[index].firstName} ${list[index].lastName.toString()}",
                                           subTitle: list[index].email
                                               .toString(),
-                                          trailingIcon: UIIcons.arrowBtnIcon,
+                                          trailingIconTap: () {
+                                            username = list[index].firstName;
+                                            Future.delayed(
+                                              Duration(seconds: 3),
+                                              () {
+                                                setState(() {
+                                                  username = "";
+                                                });
+                                              },
+                                            );
+                                            setState(() {});
+                                          },
+                                          isFav:
+                                              username == list[index].firstName
+                                              ? true
+                                              : false,
                                         ),
                                       ],
                                     ).onTap(() {
                                       searchFocusNode.unfocus();
-                                      Routes.navigateToAllUsersDetailsScreen(
+                                      callNextScreenWithResult(
                                         context,
-                                        id: list[index].id!,
-                                      );
+                                        AllUsersDetailsScreen(
+                                          id: list[index].id!,
+                                        ),
+                                      ).then((fname) {
+                                        if (fname != null) {
+                                          username = fname;
+                                          Future.delayed(
+                                            Duration(seconds: 3),
+                                            () {
+                                              setState(() {
+                                                username = "";
+                                              });
+                                            },
+                                          );
+                                          setState(() {});
+                                          showSnackBar(
+                                            context,
+                                            "Added $fname to favorites",
+                                            UIColours.successColor,
+                                          );
+                                          getAllUsersBloc.add(
+                                            getAllUsersEvent(),
+                                          );
+                                        }
+                                      });
                                     }),
                               );
                             },

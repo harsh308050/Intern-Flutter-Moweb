@@ -11,7 +11,6 @@ void showImageSourceSheet(
   BuildContext context,
   ImagePicker picker,
   Function setState,
-  // Function(File) setImage,
   File image,
 ) {
   showModalBottomSheet(
@@ -29,7 +28,7 @@ void showImageSourceSheet(
                 title: "Choose From Gallery",
                 onTap: () {
                   Navigator.pop(context);
-                  CM.pickImage(ImageSource.gallery, picker).then((file) async {
+                  pickImage(ImageSource.gallery, picker).then((file) async {
                     if (file != null) {
                       setState(() {
                         image = file;
@@ -43,7 +42,7 @@ void showImageSourceSheet(
                 title: "Take a Photo",
                 onTap: () {
                   Navigator.pop(context);
-                  CM.pickImage(ImageSource.camera, picker).then((file) async {
+                  pickImage(ImageSource.camera, picker).then((file) async {
                     if (file != null) {
                       setState(() {
                         image = file;

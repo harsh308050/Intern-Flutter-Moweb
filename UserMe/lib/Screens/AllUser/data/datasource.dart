@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:UserMe/Utils/extensions.dart';
+
 import '../../../Http/http_helper.dart';
 import '../../../Utils/APIConstant.dart';
 
@@ -9,10 +11,10 @@ class DataSource {
     bool? isTyping,
   }) async {
     final buffer = StringBuffer("${APIConstant.allusers}/");
-    if (query != null && query.isNotEmpty || isTyping == true) {
+    if (query.isNotNullOrEmpty || isTyping == true) {
       buffer.write("${APIConstant.searchQuery}$query");
     }
-    if (order != null && order.isNotEmpty) {
+    if (order.isNotNullOrEmpty) {
       buffer.write("${APIConstant.sorting}$order");
     }
     final response = await getMethod(endpoint: buffer.toString());

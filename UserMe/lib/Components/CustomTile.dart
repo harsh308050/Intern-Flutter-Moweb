@@ -1,38 +1,49 @@
+import 'package:UserMe/Utils/extensions.dart';
+
 import '../Utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class CustomTile extends StatelessWidget {
+class CustomTile extends StatefulWidget {
   final Widget leadingIcon;
   final String title;
   final String? subTitle;
-  final Icon? trailingIcon;
+  final bool? showTrailingIcon;
+  final VoidCallback? trailingIconTap;
   final VoidCallback? onTap;
+  final bool? isFav;
   final Color? textColor;
   const CustomTile({
     super.key,
     required this.leadingIcon,
     required this.title,
     this.subTitle,
-    this.trailingIcon,
+    this.showTrailingIcon = false,
+    this.trailingIconTap,
     this.textColor,
     this.onTap,
+    this.isFav,
   });
 
+  @override
+  State<CustomTile> createState() => _CustomTileState();
+}
+
+class _CustomTileState extends State<CustomTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
       horizontalTitleGap: 20,
-      leading: leadingIcon,
+      leading: widget.leadingIcon,
       title: Text(
-        title,
+        widget.title,
         style: TextStyle(
           fontSize: UISizes.tileTitle,
-          color: textColor ?? UIColours.black,
+          color: widget.textColor ?? UIColours.black,
         ),
       ),
-      subtitle: subTitle != null
+      subtitle: widget.subTitle.isNotNullOrEmpty
           ? Text(
-              subTitle!,
+              widget.subTitle!,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: UISizes.tileSubtitle,
@@ -40,8 +51,15 @@ class CustomTile extends StatelessWidget {
               ),
             )
           : null,
-      trailing: trailingIcon,
-      onTap: onTap,
+      trailing: widget.showTrailingIcon == true
+          ? IconButton(
+              icon: widget.isFav == true
+                  ? UIIcons.favoriteFilled
+                  : UIIcons.favorite,
+              onPressed: widget.trailingIconTap,
+            )
+          : UIIcons.arrowBtnIcon,
+      onTap: widget.onTap,
       shape: Border(
         bottom: BorderSide(
           color: UIColours.greyShade.withOpacity(0.3),

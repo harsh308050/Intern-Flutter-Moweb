@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:UserMe/Utils/extensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Screens/User/model/user_res_model.dart';
 import '../main.dart';
@@ -52,9 +53,8 @@ sharedPrefGetUser() {
 }
 
 sharedPrefGetToken() {
-  final token = sharedPrefGetData(sharedPrefKeys.accessTokenKey);
-  if (token != null && token is String) {
+  final String token = sharedPrefGetData(sharedPrefKeys.accessTokenKey);
+  if (token.isNotNullOrEmpty) {
     return token;
   }
-  return null;
 }

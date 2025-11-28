@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:UserMe/Screens/Auth/signupscreen.dart';
+import 'package:UserMe/Screens/Home/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Components/CM.dart';
 import '../../Components/CustomButton.dart';
 import '../../Components/CustomTextButton.dart';
 import '../../Components/CustomTextField.dart';
-import '../../routes/routes.dart';
+
 import '../../utils/SharedPrefHelper.dart';
 import '../../utils/utils.dart';
 import 'package:flutter/foundation.dart';
@@ -57,13 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
               state.user?.accessToken,
             );
             log('Token saved: $token');
-            Routes.navigateToHomePage(context, user: state.user);
+            callNextScreen(context, Homepage());
           } else if (state.status == Status.failed) {
-            CM.showSnackBar(
-              context,
-              UIStrings.loginFailed,
-              UIColours.errorColor,
-            );
+            showSnackBar(context, UIStrings.loginFailed, UIColours.errorColor);
           }
         },
         child: BlocBuilder<UserBloc, AppState>(
@@ -89,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      CM.SbhMain(),
+                      SbhMain(),
                       CustomTextfield(
                         focusNode: emailFocusNode,
                         controller: emailController,
@@ -97,10 +95,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         labelText: UIStrings.emailLabel,
                         prefixIcon: UIIcons.emailIcon,
                         validator: (value) {
-                          return CM.inputvalidator(value, "Username");
+                          return inputvalidator(value, "Username");
                         },
                       ),
-                      CM.SbhSub(),
+                      SbhSub(),
                       CustomTextfield(
                         focusNode: passwordFocusNode,
                         controller: passwordController,
@@ -117,10 +115,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             ? UIIcons.passwordEyeIcon.icon
                             : UIIcons.passwordEyeDisabledIcon.icon,
                         validator: (value) {
-                          return CM.inputvalidator(value, "Password");
+                          return inputvalidator(value, "Password");
                         },
                       ),
-                      CM.SbhSub(),
+                      SbhSub(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -130,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
 
-                      CM.SbhMin(),
+                      SbhMin(),
                       CustomButton(
                         isLoading: state.status == Status.busy ? true : false,
                         buttonText: UIStrings.loginButton,
@@ -146,14 +144,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           } else {
                             if (emailController.text.isEmpty ||
-                                CM.inputvalidator(
-                                      emailController.text,
-                                      "Email",
-                                    ) !=
+                                inputvalidator(emailController.text, "Email") !=
                                     null) {
                               focusNodeRoute(emailFocusNode, context);
                             } else if (passwordController.text.isEmpty ||
-                                CM.inputvalidator(
+                                inputvalidator(
                                       passwordController.text,
                                       "Password",
                                     ) !=
@@ -163,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         },
                       ),
-                      CM.SbhSub(),
+                      SbhSub(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -178,7 +173,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonText: UIStrings.signupButton,
                             onTextButtonPressed: () {
                               FocusScope.of(context).unfocus();
-                              Routes.navigateToSignupScreen(context, false);
+                              callNextScreenAndClearStack(
+                                context,
+                                SignupScreen(),
+                              );
                             },
                           ),
                         ],

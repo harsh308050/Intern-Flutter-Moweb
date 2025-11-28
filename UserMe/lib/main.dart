@@ -29,13 +29,13 @@ class MyApp extends StatelessWidget {
       bloc: connectionBloc,
       listener: (context, state) {
         if (state.status == Status.failed) {
-          CM.showSnackBar(
+          showSnackBar(
             navigatorKey.currentContext!,
             'No Internet! Check Your Connection',
             UIColours.errorColor,
           );
         } else if (state.status == Status.success) {
-          CM.showSnackBar(
+          showSnackBar(
             navigatorKey.currentContext!,
             'Internet Connected',
             UIColours.successColor,

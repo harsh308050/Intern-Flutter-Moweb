@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Components/CustomAppBar.dart';
-import '../../Routes/routes.dart';
+
 import '../../Utils/utils.dart';
-import '../../components/CM.dart';
+import '../../Components/CM.dart';
 import '../../components/CustomButton.dart';
 import '../../components/CustomTextField.dart';
 import '../../utils/SharedPrefHelper.dart';
@@ -70,15 +70,15 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
               sharedPrefKeys.userDataKey,
               jsonEncode(state.userdetails?.toJson()),
             );
-            Routes.popScreen(context);
-            CM.showSnackBar(
+            Navigator.pop(context);
+            showSnackBar(
               context,
               "User details edited successfully",
               UIColours.successColor,
             );
           }
           if (state.status == UserDetailsStatus.failed) {
-            CM.showSnackBar(
+            showSnackBar(
               context,
               "Failed to edit user details",
               UIColours.errorColor,
@@ -105,7 +105,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
                               hintText: UIStrings.fnameHint,
                               labelText: UIStrings.fname,
                               validator: (value) {
-                                return CM.inputvalidator(value, "First Name");
+                                return inputvalidator(value, "First Name");
                               },
                             ),
                             CustomTextfield(
@@ -114,7 +114,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
                               hintText: UIStrings.lnameHint,
                               labelText: UIStrings.lname,
                               validator: (value) {
-                                return CM.inputvalidator(value, "Last Name");
+                                return inputvalidator(value, "Last Name");
                               },
                             ),
                             CustomTextfield(
@@ -123,7 +123,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
                               hintText: UIStrings.gender,
                               labelText: UIStrings.gender,
                               validator: (value) {
-                                return CM.inputvalidator(value, "Gender");
+                                return inputvalidator(value, "Gender");
                               },
                             ),
                             CustomTextfield(
@@ -133,7 +133,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
                               labelText: UIStrings.age,
                               keyboardType: TextInputType.number,
                               validator: (value) {
-                                return CM.inputvalidator(value, "Age");
+                                return inputvalidator(value, "Age");
                               },
                             ),
                             CustomTextfield(
@@ -143,7 +143,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
                               suffixIcon: Icons.lock_outline,
                               labelText: UIStrings.emailLabel,
                               validator: (value) {
-                                return CM.inputvalidator(value, "Email");
+                                return inputvalidator(value, "Email");
                               },
                             ),
                           ],

@@ -1,11 +1,12 @@
 import 'dart:io';
+import 'package:UserMe/Screens/Auth/AuthScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Components/CM.dart';
 import '../../Components/CustomAppBar.dart';
 import '../../Components/CustomGenderButton.dart';
 import '../../Components/CustomProfile.dart';
-import '../../Routes/routes.dart';
+
 import '../../components/CustomTile.dart';
 import '../../utils/utils.dart';
 import '../../components/CustomButton.dart';
@@ -68,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
         bloc: addUsersBloc,
         listener: (context, state) {
           if (state.status == UserDetailsStatus.success) {
-            CM.showSnackBar(
+            showSnackBar(
               context,
               widget.isFromAddUser!
                   ? "User added successfully"
@@ -76,11 +77,11 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
               UIColours.successColor,
             );
             widget.isFromAddUser!
-                ? Routes.popScreen(context)
-                : Routes.navigateToLoginScreen(context);
+                ? Navigator.pop(context)
+                : callNextScreenAndClearStack(context, AuthScreen());
           } else {
             if (state.status == UserDetailsStatus.failed) {
-              CM.showSnackBar(
+              showSnackBar(
                 context,
                 "An error occurred. Please try again.",
                 UIColours.errorColor,
@@ -133,23 +134,16 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                                           Navigator.pop(
                                                             context,
                                                           );
-                                                          CM
-                                                              .pickImage(
-                                                                ImageSource
-                                                                    .gallery,
-                                                                picker,
-                                                              )
-                                                              .then((
-                                                                file,
-                                                              ) async {
-                                                                if (file !=
-                                                                    null) {
-                                                                  setState(() {
-                                                                    image =
-                                                                        file;
-                                                                  });
-                                                                }
+                                                          pickImage(
+                                                            ImageSource.gallery,
+                                                            picker,
+                                                          ).then((file) async {
+                                                            if (file != null) {
+                                                              setState(() {
+                                                                image = file;
                                                               });
+                                                            }
+                                                          });
                                                         },
                                                       ),
                                                       CustomTile(
@@ -161,23 +155,16 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                                           Navigator.pop(
                                                             context,
                                                           );
-                                                          CM
-                                                              .pickImage(
-                                                                ImageSource
-                                                                    .camera,
-                                                                picker,
-                                                              )
-                                                              .then((
-                                                                file,
-                                                              ) async {
-                                                                if (file !=
-                                                                    null) {
-                                                                  setState(() {
-                                                                    image =
-                                                                        file;
-                                                                  });
-                                                                }
+                                                          pickImage(
+                                                            ImageSource.camera,
+                                                            picker,
+                                                          ).then((file) async {
+                                                            if (file != null) {
+                                                              setState(() {
+                                                                image = file;
                                                               });
+                                                            }
+                                                          });
                                                         },
                                                       ),
                                                     ],
@@ -218,7 +205,7 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                         hintText: UIStrings.typehereHint,
                                         labelText: UIStrings.fname,
                                         validator: (value) {
-                                          return CM.inputvalidator(
+                                          return inputvalidator(
                                             value,
                                             "First Name",
                                           );
@@ -232,7 +219,7 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                         hintText: UIStrings.typehereHint,
                                         labelText: UIStrings.lname,
                                         validator: (value) {
-                                          return CM.inputvalidator(
+                                          return inputvalidator(
                                             value,
                                             "Last Name",
                                           );
@@ -249,7 +236,7 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                   keyboardType: TextInputType.number,
                                   maxLength: 3,
                                   validator: (value) {
-                                    return CM.inputvalidator(value, "Age");
+                                    return inputvalidator(value, "Age");
                                   },
                                 ),
                                 Column(
@@ -304,7 +291,7 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                   hintText: UIStrings.usernameHint,
                                   labelText: UIStrings.username,
                                   validator: (value) {
-                                    return CM.inputvalidator(value, "Username");
+                                    return inputvalidator(value, "Username");
                                   },
                                 ),
                                 CustomTextfield(
@@ -313,7 +300,7 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                   hintText: UIStrings.emailHint,
                                   labelText: UIStrings.emailLabel,
                                   validator: (value) {
-                                    return CM.inputvalidator(value, "Email");
+                                    return inputvalidator(value, "Email");
                                   },
                                 ),
                                 CustomTextfield(
@@ -322,14 +309,14 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                   hintText: UIStrings.passwordHint,
                                   labelText: UIStrings.passwordLabel,
                                   validator: (value) {
-                                    return CM.inputvalidator(value, "Password");
+                                    return inputvalidator(value, "Password");
                                   },
                                 ),
                               ],
                             ),
                           ),
-                          CM.SbhMain(),
-                          CM.SbhMain(),
+                          SbhMain(),
+                          SbhMain(),
 
                           CustomButton(
                             isLoading: state.status == UserDetailsStatus.busy
@@ -361,7 +348,7 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                           },
                                         ),
                                       )
-                                    : CM.showSnackBar(
+                                    : showSnackBar(
                                         context,
                                         "SignUp later",
                                         UIColours.successColor,
@@ -376,14 +363,14 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                 } else if (usernameController.text.isEmpty) {
                                   focusNodeRoute(usernameFocusNode, context);
                                 } else if (emailController.text.isEmpty ||
-                                    CM.inputvalidator(
+                                    inputvalidator(
                                           emailController.text,
                                           "Email",
                                         ) !=
                                         null) {
                                   focusNodeRoute(emailFocusNode, context);
                                 } else if (passwordController.text.isEmpty ||
-                                    CM.inputvalidator(
+                                    inputvalidator(
                                           passwordController.text,
                                           "Password",
                                         ) !=
@@ -394,7 +381,7 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                             },
                           ),
 
-                          CM.SbhMin(),
+                          SbhMin(),
                           widget.isFromAddUser!
                               ? SizedBox.shrink()
                               : Row(
@@ -410,7 +397,10 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                     CustomTextButton(
                                       buttonText: UIStrings.loginButton,
                                       onTextButtonPressed: () {
-                                        Routes.navigateToLoginScreen(context);
+                                        callNextScreenAndClearStack(
+                                          context,
+                                          AuthScreen(),
+                                        );
                                       },
                                     ),
                                   ],

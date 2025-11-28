@@ -1,3 +1,6 @@
+import 'package:UserMe/Components/CustomButton.dart';
+import 'package:UserMe/Utils/extensions.dart';
+
 import '../../Components/CustomLoader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/bloc.dart';
 import 'bloc/event.dart';
 import 'bloc/state.dart';
-import '../../components/CM.dart';
+import '../../Components/CM.dart';
 import '../../components/CustomAppBar.dart';
 
 import '../../Components/CustomUserDetailsTile.dart';
@@ -80,8 +83,7 @@ class _AllUsersDetailsScreenState extends State<AllUsersDetailsScreen> {
                                   radius: 60,
                                   backgroundColor: UIColours.white,
                                   backgroundImage:
-                                      (user?.image != null &&
-                                          user!.image!.isNotEmpty)
+                                      (user?.image.isNotNullOrEmpty ?? false)
                                       ? NetworkImage(user!.image!)
                                       : null,
                                 ),
@@ -94,7 +96,7 @@ class _AllUsersDetailsScreenState extends State<AllUsersDetailsScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              CM.SbhMin(),
+                              SbhMin(),
                               Text(
                                 user?.email ?? 'harsh308050@gmail.com',
                                 style: TextStyle(
@@ -105,8 +107,8 @@ class _AllUsersDetailsScreenState extends State<AllUsersDetailsScreen> {
                             ],
                           ),
                         ),
-                        CM.SbhMain(),
-                        CM.SbhMain(),
+                        SbhMain(),
+                        SbhMain(),
                         Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: UISizes.subSpacing + 5,
@@ -161,6 +163,12 @@ class _AllUsersDetailsScreenState extends State<AllUsersDetailsScreen> {
                               ),
                             ],
                           ),
+                        ),
+                        CustomButton(
+                          buttonText: "Add to Favorites",
+                          onButtonPressed: () {
+                            Navigator.pop(context, user?.firstName);
+                          },
                         ),
                       ],
                     ),

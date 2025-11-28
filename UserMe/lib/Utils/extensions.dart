@@ -14,6 +14,32 @@ extension OnTapExtension on Widget {
   }
 }
 
+extension StringOperations on String? {
+  bool get isNullOrEmpty {
+    return this == null || this!.isEmpty;
+  }
+
+  bool get isNotNullOrEmpty {
+    return this != null && this!.isNotEmpty;
+  }
+
+  bool get isNull {
+    return this == null;
+  }
+
+  bool get isNotNull {
+    return this != null;
+  }
+
+  bool get isEmpty {
+    return this == "";
+  }
+
+  bool get isNotEmpty {
+    return this != "";
+  }
+}
+
 // extension DateFormating on DateTime {
 //   ///03 Aug 2025
 //   String toFormattedDate() {

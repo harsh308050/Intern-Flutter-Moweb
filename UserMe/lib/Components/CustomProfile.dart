@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:UserMe/Utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 class CustomProfile extends StatefulWidget {
@@ -30,36 +31,36 @@ class _CustomProfileState extends State<CustomProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: Stack(
-        children: [
-          isFile()
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.file(
-                    File(widget.imagePath),
-                    fit: BoxFit.cover,
-                    width: 120,
-                    height: 120,
-                  ),
-                )
-              : ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.asset(
-                    widget.imagePath,
-                    fit: BoxFit.cover,
-                    width: 120,
-                    height: 120,
-                  ),
+    // return GestureDetector(
+    //   onTap: ,
+    //   child:
+    return Stack(
+      children: [
+        isFile()
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.file(
+                  File(widget.imagePath),
+                  fit: BoxFit.cover,
+                  width: 120,
+                  height: 120,
                 ),
-          Positioned(
-            bottom: 5,
-            right: 5,
-            child: widget.child != null ? widget.child! : SizedBox(),
-          ),
-        ],
-      ),
-    );
+              )
+            : ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.asset(
+                  widget.imagePath,
+                  fit: BoxFit.cover,
+                  width: 120,
+                  height: 120,
+                ),
+              ),
+        Positioned(
+          bottom: 5,
+          right: 5,
+          child: widget.child != null ? widget.child! : SizedBox(),
+        ),
+      ],
+    ).onTap(widget.onTap!);
   }
 }

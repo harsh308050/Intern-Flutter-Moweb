@@ -119,6 +119,15 @@ class UIIcons {
     size: 17,
   );
 
+  static Icon favorite = Icon(
+    Icons.favorite_border,
+    color: UIColours.errorColor,
+  );
+  static Icon favoriteFilled = Icon(
+    Icons.favorite,
+    color: UIColours.errorColor,
+  );
+
   static Icon filter = Icon(
     Icons.sort_by_alpha_rounded,
     color: UIColours.black,
