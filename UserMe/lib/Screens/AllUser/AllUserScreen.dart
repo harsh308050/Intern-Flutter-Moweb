@@ -45,15 +45,24 @@ class _UserScreenState extends State<UserScreen> {
   }
 
   scrollPosition() {
+    bool callApi = true;
     final max = scrollController.position.maxScrollExtent;
     final min = scrollController.position.minScrollExtent;
     final current = scrollController.position.pixels;
     final mid = max / 2;
     calculateScroll(current, max, min, mid);
     if (current == max) {
-      getAllUsersBloc.add(
-        getAllUsersEvent(skip: getAllUsersBloc.state.allusers?.users?.length),
-      );
+      if (selectedOrder.isNotNull ||
+          searchController.text.isNotEmpty ||
+          getAllUsersBloc.state.allusers?.users?.length ==
+              getAllUsersBloc.state.allusers?.total) {
+        callApi = false;
+      }
+      if (callApi) {
+        getAllUsersBloc.add(
+          getAllUsersEvent(skip: getAllUsersBloc.state.allusers?.users?.length),
+        );
+      }
     }
   }
 
@@ -317,17 +326,7 @@ class _UserScreenState extends State<UserScreen> {
                             shrinkWrap: true,
                             controller: scrollController,
                             children: [
-                              ReorderableListView.builder(
-                                onReorder: (oldIndex, newIndex) {
-                                  setState(() {
-                                    if (oldIndex < newIndex) {
-                                      newIndex -= 1;
-                                    }
-                                    final item = list.removeAt(oldIndex);
-                                    ;
-                                    list.insert(newIndex, item);
-                                  });
-                                },
+                              ListView.builder(
                                 physics: BouncingScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: list.length,
@@ -336,7 +335,7 @@ class _UserScreenState extends State<UserScreen> {
                                     decoration: BoxDecoration(
                                       color: UIColours.white,
                                     ),
-                                    key: ValueKey(list[index].id.toString()),
+
                                     child:
                                         Column(
                                           spacing: UISizes.subSpacing,

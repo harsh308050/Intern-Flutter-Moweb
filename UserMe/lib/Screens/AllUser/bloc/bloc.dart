@@ -31,18 +31,18 @@ class AllUsersBloc extends Bloc<BlocEvent, getAllUsersAppState> {
         success: (data) {
           if (event.skip == null || event.skip == 0) {
             emit(state.copyWith(status: Status.success, allusers: data));
+            emit(state.copyWith(status: Status.none));
           } else {
             final prev = state.allusers?.users;
             prev?.addAll(data.users ?? []);
             emit(
               state.copyWith(
                 status: Status.success,
-                allusers: AllUsersModel(users: prev),
+                allusers: AllUsersModel(users: prev, total: data.total),
               ),
             );
-
-            emit(state.copyWith(status: Status.none));
             emit(state.copyWith(loadMore: Status.none));
+            emit(state.copyWith(status: Status.none));
           }
         },
         failure: (error) {
