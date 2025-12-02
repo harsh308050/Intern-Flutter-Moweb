@@ -9,6 +9,7 @@ class DataSource {
     String? query,
     String? order,
     bool? isTyping,
+    int? skip,
   }) async {
     final buffer = StringBuffer("${APIConstant.allusers}");
     if (query.isNotNullOrEmpty || isTyping == true) {
@@ -16,6 +17,9 @@ class DataSource {
     }
     if (order.isNotNullOrEmpty) {
       buffer.write("${APIConstant.sorting}$order");
+    }
+    if (skip != null) {
+      buffer.write("${APIConstant.limit}&${APIConstant.skip}$skip");
     }
     final response = await getMethod(endpoint: buffer.toString());
     log('response: $response');

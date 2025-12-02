@@ -7,8 +7,9 @@ class getAllUsersEvent extends BlocEvent {
   final String? query;
   final String? order;
   final bool? isTyping;
+  final int? skip;
 
-  getAllUsersEvent({this.query, this.order, this.isTyping});
+  getAllUsersEvent({this.query, this.order, this.isTyping, this.skip});
 }
 
 class getAllUsersDetailsEvent extends BlocEvent {

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/repository.dart';
+import '../model/allUser_model.dart';
 import 'event.dart';
 import 'state.dart';
 
@@ -13,21 +14,39 @@ class AllUsersBloc extends Bloc<BlocEvent, getAllUsersAppState> {
     getAllUsersEvent event,
     Emitter<getAllUsersAppState> emit,
   ) async {
-    emit(state.copyWith(status: Status.busy));
+    if (event.skip == null || event.skip == 0) {
+      emit(state.copyWith(status: Status.busy));
+    } else {
+      emit(state.copyWith(loadMore: Status.busy));
+    }
     try {
       final allusers = await repository.getAllUsers(
         event.query,
         event.order,
         event.isTyping,
+        event.skip,
       );
 
-      emit(state.copyWith(status: Status.busy));
       allusers.when(
         success: (data) {
-          emit(state.copyWith(status: Status.success, allusers: data));
+          if (event.skip == null || event.skip == 0) {
+            emit(state.copyWith(status: Status.success, allusers: data));
+          } else {
+            final prev = state.allusers?.users;
+            prev?.addAll(data.users ?? []);
+            emit(
+              state.copyWith(
+                status: Status.success,
+                allusers: AllUsersModel(users: prev),
+              ),
+            );
+
+            emit(state.copyWith(status: Status.none));
+            emit(state.copyWith(loadMore: Status.none));
+          }
         },
         failure: (error) {
-          emit(state.copyWith(status: Status.failed));
+          emit(state.copyWith(status: Status.failed, loadMore: Status.none));
         },
       );
     } catch (e) {
@@ -59,14 +78,4 @@ class AllUsersBloc extends Bloc<BlocEvent, getAllUsersAppState> {
       emit(state.copyWith(status: Status.failed));
     }
   }
-
-  // Future<void> onInitialData(
-  //   initialDataEvent event,
-  //   Emitter<getAllUsersAppState> emit,
-  // ) async {
-  //   emit(state.copyWith(status: Status.busy));
-  //   try {} catch (e) {
-  //     emit(state.copyWith(status: Status.failed));
-  //   }
-  // }
 }

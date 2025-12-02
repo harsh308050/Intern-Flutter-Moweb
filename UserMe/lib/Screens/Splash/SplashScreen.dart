@@ -4,7 +4,6 @@ import '../../Utils/extensions.dart';
 import '../../Utils/utils.dart';
 import 'package:flutter/material.dart';
 import '/main.dart';
-
 import '/utils/SharedPrefHelper.dart';
 import 'OnBoarding.dart';
 
@@ -38,6 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         color: UIColours.primaryColor,
+
         child: Center(
           child: Text(
             'UserMe',

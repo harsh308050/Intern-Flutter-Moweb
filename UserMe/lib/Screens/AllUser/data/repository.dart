@@ -14,12 +14,14 @@ class Repository {
     String? query,
     String? order,
     bool? isTyping,
+    int? skip,
   ) async {
     try {
       Response result = await dataSource.getAllUsers(
         query: query,
         order: order,
         isTyping: isTyping,
+        skip: skip,
       );
       if (result.statusCode == 200 || result.statusCode == 201) {
         final data = AllUsersModel.fromJson(jsonDecode(result.body));
