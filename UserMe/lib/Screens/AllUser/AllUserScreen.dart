@@ -58,7 +58,7 @@ class _UserScreenState extends State<UserScreen> {
               getAllUsersBloc.state.allusers?.total) {
         callApi = false;
       }
-      if (callApi) {
+      if (callApi && getAllUsersBloc.state.loadMore != Status.busy) {
         getAllUsersBloc.add(
           getAllUsersEvent(skip: getAllUsersBloc.state.allusers?.users?.length),
         );
