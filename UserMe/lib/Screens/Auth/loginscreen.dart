@@ -56,7 +56,12 @@ class _LoginScreenState extends State<LoginScreen> {
               sharedPrefKeys.accessTokenKey,
               state.user?.accessToken,
             );
-            log('Token saved: $token');
+            log('======================Token saved: $token');
+            var refreshtoken = await sharedPrefsaveData(
+              sharedPrefKeys.refreshTokenKey,
+              state.user?.refreshToken,
+            );
+            log('======================Refresh Token saved: $refreshtoken');
             callNextScreenAndClearStack(context, Homepage());
           } else if (state.status == Status.failed) {
             showSnackBar(context, UIStrings.loginFailed, UIColours.errorColor);
@@ -171,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonText: UIStrings.signupButton,
                             onTextButtonPressed: () {
                               FocusScope.of(context).unfocus();
-                              widget.onSwitchTab;
+                              widget.onSwitchTab!();
                             },
                           ),
                         ],

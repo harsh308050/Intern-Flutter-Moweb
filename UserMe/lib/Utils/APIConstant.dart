@@ -8,4 +8,5 @@ class APIConstant {
   static const String sorting = "?sortBy=firstName&order=";
   static const String limit = "?limit=15";
   static const String skip = "skip=";
+  static const String refreshToken = "auth/refresh";
 }

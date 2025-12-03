@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import '../../../Http/http_helper.dart';
 import '../../../Utils/APIConstant.dart';
+import '../../../Utils/SharedPrefHelper.dart';
+import '../../../Utils/utils.dart';
 
 class DataSource {
   final String baseUrl = APIConstant.baseUrl;
@@ -31,5 +34,33 @@ class DataSource {
     );
     log('Add User response: $response');
     return response;
+  }
+
+  Future<String?> getRefreshToken() async {
+    final oldRefreshToken = sharedPrefGetData(sharedPrefKeys.refreshTokenKey);
+
+    Map<String, dynamic> params = {
+      "refreshToken": oldRefreshToken,
+      'expiresInMins': 1,
+    };
+
+    final response = await postMethod(
+      endpoint: APIConstant.refreshToken,
+      body: params,
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final newAccessToken = data['accessToken'];
+      final newRefreshToken = data['refreshToken'];
+
+      await sharedPrefsaveData(sharedPrefKeys.accessTokenKey, newAccessToken);
+
+      await sharedPrefsaveData(sharedPrefKeys.refreshTokenKey, newRefreshToken);
+
+      return newAccessToken;
+    } else {
+      return null;
+    }
   }
 }

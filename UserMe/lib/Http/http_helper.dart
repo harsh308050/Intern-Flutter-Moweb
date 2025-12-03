@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import '../utils/APIConstant.dart';
 import '../utils/SharedPrefHelper.dart';
+import '../Screens/User/data/datasource.dart';
 
 Future<dynamic> postMethod({
   required String endpoint,
@@ -11,7 +12,7 @@ Future<dynamic> postMethod({
 }) async {
   try {
     final url = Uri.parse(APIConstant.baseUrl + endpoint);
-    final requestHeaders = headers ?? getSessionData();
+    final requestHeaders = await getSessionData();
 
     log("--------- URL ---------- $url");
     log("---------- Request ----------${jsonEncode(body)}");
@@ -55,10 +56,29 @@ Future<dynamic> getMethod({
 
     final response = await http.get(url, headers: requestHeaders);
 
+    if (response.statusCode == 401) {
+      log('=============Token expired');
+      final newToken = await DataSource().getRefreshToken();
+
+      if (newToken != null) {
+        log('=============Retrying');
+        final retryResponse = await getMethod(
+          endpoint: endpoint,
+          headers: requestHeaders
+            ..update("Authorization", (_) => "Bearer $newToken"),
+        );
+        return retryResponse;
+      } else {
+        log('=============Failed');
+        return response;
+      }
+    }
+
     log("----------- GET Response ----------- ${response.body}");
     return response;
   } catch (e) {
     log("GET ERROR $e");
+    rethrow;
   }
 }
 

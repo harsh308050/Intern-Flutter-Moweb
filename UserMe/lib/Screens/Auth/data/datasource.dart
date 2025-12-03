@@ -10,7 +10,11 @@ class DataSource {
     required String username,
     required String password,
   }) async {
-    Map<String, dynamic> params = {"username": username, "password": password};
+    Map<String, dynamic> params = {
+      "username": username,
+      "password": password,
+      'expiresInMins': 1,
+    };
     final response = await postMethod(
       endpoint: APIConstant.login,
       body: params,

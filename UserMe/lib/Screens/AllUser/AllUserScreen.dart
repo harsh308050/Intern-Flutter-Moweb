@@ -74,6 +74,10 @@ class _UserScreenState extends State<UserScreen> {
     } else if (current < mid) {
       scrollNotifier.value = 0;
     }
+    searchFocusNode.unfocus();
+    if (current == min && searchFocusNode.hasFocus == false) {
+      searchFocusNode.requestFocus();
+    }
   }
 
   String? username = "";
@@ -234,9 +238,8 @@ class _UserScreenState extends State<UserScreen> {
         },
 
         child: SafeArea(
-          child: Container(
+          child: Padding(
             padding: EdgeInsets.only(
-              top: UISizes.aroundPadding - 10,
               left: UISizes.aroundPadding,
               right: UISizes.aroundPadding,
             ),
@@ -305,7 +308,7 @@ class _UserScreenState extends State<UserScreen> {
                       }
                       return Expanded(
                         child: RefreshIndicator(
-                          backgroundColor: UIColours.primaryColor,
+                          color: UIColours.primaryColor,
                           elevation: 4.0,
 
                           onRefresh: () {

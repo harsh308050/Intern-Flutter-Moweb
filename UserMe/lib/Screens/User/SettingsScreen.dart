@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:UserMe/Components/CustomTextButton.dart';
+import 'package:UserMe/Components/CustomButton.dart';
 import 'package:UserMe/Components/CustomThemeMobile.dart';
 import 'package:UserMe/Screens/Auth/AuthScreen.dart';
 import 'package:UserMe/Screens/User/UserDetailsScreen.dart';
@@ -37,9 +37,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     log(
       " Settings Screen Initialized================================= ${user}",
     );
-    if (user == null) {
-      userBloc.add(UserDetailsEvent());
-    }
+    // if (user == null) {
+    userBloc.add(UserDetailsEvent());
+    // }
 
     super.initState();
   }
@@ -56,7 +56,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         } else if (state.status == UserDetailsStatus.failed) {
           showSnackBar(
             context,
-            "Failed to load user details",
+            "Token Expired! Please Login Again.",
             UIColours.errorColor,
           );
         }
@@ -230,45 +230,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return AlertDialog(
-                                      title: Column(
-                                        spacing: 5,
-                                        crossAxisAlignment: .start,
-                                        mainAxisAlignment: .start,
-                                        children: [
-                                          Text(
-                                            'Confirm Logout',
-                                            style: TextStyle(
-                                              color: UIColours.primaryColor,
-                                              fontWeight: .bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Are you sure you want to logout?',
-                                            style: TextStyle(fontSize: 15),
-                                          ),
-                                        ],
-                                      ),
-                                      actions: [
-                                        CustomTextButton(
-                                          buttonText: 'Cancel',
-                                          onTextButtonPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        CustomTextButton(
-                                          buttonText: 'Logout',
-                                          buttonColor: UIColours.errorColor,
-                                          onTextButtonPressed: () {
-                                            sharedPrefClearAllData();
-                                            log("Logged out");
-                                            callNextScreenAndClearStack(
-                                              context,
-                                              AuthScreen(),
-                                            );
-                                          },
-                                        ),
-                                      ],
+                                    return CustomDialog(
+                                      btnText: "Logout",
+                                      content: "Are You Sure to Logout?",
+                                      title: "Confirm Logout",
                                     );
                                   },
                                 );
@@ -281,45 +246,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return AlertDialog(
-                                      title: Column(
-                                        spacing: 5,
-                                        crossAxisAlignment: .start,
-                                        mainAxisAlignment: .start,
-                                        children: [
-                                          Text(
-                                            'Confirm Delete',
-                                            style: TextStyle(
-                                              color: UIColours.primaryColor,
-                                              fontWeight: .bold,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Are you sure you want to delete account?',
-                                            style: TextStyle(fontSize: 15),
-                                          ),
-                                        ],
-                                      ),
-                                      actions: [
-                                        CustomTextButton(
-                                          buttonText: 'Cancel',
-                                          onTextButtonPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        CustomTextButton(
-                                          buttonText: 'Delete',
-                                          buttonColor: UIColours.errorColor,
-                                          onTextButtonPressed: () {
-                                            sharedPrefClearAllData();
-                                            log("Logged out");
-                                            callNextScreenAndClearStack(
-                                              context,
-                                              AuthScreen(),
-                                            );
-                                          },
-                                        ),
-                                      ],
+                                    return CustomDialog(
+                                      btnText: "Delete",
+                                      content:
+                                          "Are You Sure To Delete Your Account?",
+                                      title: "Confirm Deletion",
                                     );
                                   },
                                 );
@@ -336,6 +267,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
         ),
       ),
+    );
+  }
+
+  Widget CustomDialog({String? title, String? content, String? btnText}) {
+    return AlertDialog(
+      insetPadding: EdgeInsets.all(UISizes.aroundPadding),
+      titlePadding: EdgeInsets.only(
+        left: UISizes.aroundPadding,
+        right: UISizes.aroundPadding,
+        top: UISizes.aroundPadding,
+      ),
+      contentPadding: EdgeInsets.only(
+        left: UISizes.aroundPadding,
+        right: UISizes.aroundPadding,
+        top: UISizes.minSpacing,
+      ),
+      actionsPadding: EdgeInsets.only(
+        top: UISizes.aroundPadding + UISizes.minSpacing,
+        bottom: UISizes.aroundPadding,
+        right: UISizes.aroundPadding,
+        left: UISizes.aroundPadding,
+      ),
+      actionsAlignment: .spaceBetween,
+      title: Text(
+        title!,
+        style: TextStyle(color: UIColours.primaryColor, fontWeight: .bold),
+      ),
+
+      content: Text(content!, style: TextStyle(fontSize: 15)),
+      actions: [
+        CustomButton(
+          buttonText: 'Cancel',
+          btnWidth: 110,
+          onButtonPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        CustomButton(
+          backgroundColor: UIColours.errorColor,
+          buttonText: btnText!,
+          btnWidth: 110,
+          onButtonPressed: () {
+            sharedPrefClearAllData();
+            log("Logged out");
+            callNextScreenAndClearStack(context, AuthScreen());
+          },
+        ),
+      ],
     );
   }
 }

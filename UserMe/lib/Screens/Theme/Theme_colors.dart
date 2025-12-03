@@ -11,10 +11,13 @@ class AppTheme {
     ),
     primaryColor: UIColours.primaryColor,
     textTheme: TextTheme(bodyMedium: TextStyle(color: UIColours.black)),
+
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: UIColours.white,
     ),
-
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      refreshBackgroundColor: UIColours.white,
+    ),
     textSelectionTheme: TextSelectionThemeData(
       selectionColor: UIColours.primaryColor.withValues(alpha: 0.3),
       selectionHandleColor: UIColours.primaryColor,
@@ -25,7 +28,6 @@ class AppTheme {
       iconColor: UIColours.black,
       textStyle: TextStyle(color: UIColours.black, fontSize: UISizes.tileTitle),
     ),
-
     dialogTheme: DialogThemeData(
       backgroundColor: UIColours.white,
       shape: RoundedRectangleBorder(
@@ -60,7 +62,7 @@ class AppTheme {
 
     primaryColor: UIColours.primaryColor,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: UIColours.black,
+      backgroundColor: UIColours.blackShade,
     ),
     textSelectionTheme: TextSelectionThemeData(
       selectionHandleColor: UIColours.primaryColor,
@@ -71,5 +73,7 @@ class AppTheme {
       fillColor: UIColours.blackShade,
       hintStyle: TextStyle(color: UIColours.grey.withValues(alpha: 0.7)),
     ),
+
+    splashColor: UIColours.black,
   );
 }

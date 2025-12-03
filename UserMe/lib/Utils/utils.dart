@@ -131,4 +131,5 @@ class AssetsPath {
 class sharedPrefKeys {
   static String userDataKey = "user";
   static String accessTokenKey = "accessToken";
+  static String refreshTokenKey = "refreshToken";
 }

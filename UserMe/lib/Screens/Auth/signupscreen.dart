@@ -398,7 +398,10 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                     ),
                                     CustomTextButton(
                                       buttonText: UIStrings.loginButton,
-                                      onTextButtonPressed: widget.onSwitchTab,
+                                      onTextButtonPressed: () {
+                                        FocusScope.of(context).unfocus();
+                                        widget.onSwitchTab!();
+                                      },
                                     ),
                                   ],
                                 ),

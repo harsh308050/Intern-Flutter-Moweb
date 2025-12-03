@@ -6,11 +6,17 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onButtonPressed;
   final String buttonText;
   final bool isLoading;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final double? btnWidth;
   const CustomButton({
     super.key,
     required this.onButtonPressed,
     required this.buttonText,
     this.isLoading = false,
+    this.backgroundColor,
+    this.borderColor,
+    this.btnWidth,
   });
 
   @override
@@ -20,8 +26,8 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onButtonPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: UIColours.primaryColor,
-          minimumSize: Size(double.infinity, UISizes.btnHeight),
+          backgroundColor: backgroundColor ?? UIColours.primaryColor,
+          minimumSize: Size(btnWidth ?? double.infinity, UISizes.btnHeight),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(UISizes.inputRadius),
           ),
