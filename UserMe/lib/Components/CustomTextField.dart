@@ -11,6 +11,7 @@ class CustomTextfield extends StatelessWidget {
   final VoidCallback? onSuffixPressed;
   final IconData? suffixIcon;
   final num? maxLength;
+  final bool enabled;
   final bool obscureText;
   final String? Function(String?)? validator;
   const CustomTextfield({
@@ -26,6 +27,7 @@ class CustomTextfield extends StatelessWidget {
     this.suffixIcon,
     this.obscureText = false,
     this.validator,
+    this.enabled = true,
   });
 
   @override
@@ -37,7 +39,6 @@ class CustomTextfield extends StatelessWidget {
           labelText,
           style: TextStyle(
             fontSize: UISizes.labelFontSize,
-            color: UIColours.black,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -63,10 +64,7 @@ class CustomTextfield extends StatelessWidget {
               borderSide: BorderSide(color: UIColours.primaryColor, width: 2),
             ),
             hintText: hintText,
-            hintStyle: TextStyle(
-              fontSize: UISizes.inputFontSize,
-              color: UIColours.grey.withOpacity(0.4),
-            ),
+            hintStyle: TextStyle(fontSize: UISizes.inputFontSize),
             prefixIcon: prefixIcon,
             suffixIcon: IconButton(
               onPressed: onSuffixPressed,
@@ -84,10 +82,14 @@ class CustomTextfield extends StatelessWidget {
               borderSide: BorderSide(color: UIColours.errorColor),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: UIColours.grey.withOpacity(0.5)),
+              borderSide: BorderSide(
+                color: UIColours.grey.withValues(alpha: 0.5),
+              ),
               borderRadius: BorderRadius.circular(UISizes.inputRadius),
             ),
           ),
+
+          enabled: enabled,
           autovalidateMode: .onUserInteraction,
         ),
       ],

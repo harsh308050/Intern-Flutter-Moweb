@@ -22,8 +22,9 @@ import '../User/data/repository.dart';
 import '../User/model/user_res_model.dart';
 
 class SignupScreen extends StatefulWidget {
+  final VoidCallback? onSwitchTab;
   final bool? isFromAddUser;
-  SignupScreen({super.key, this.isFromAddUser = false});
+  SignupScreen({super.key, this.isFromAddUser = false, this.onSwitchTab});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -56,7 +57,6 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UIColours.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(UISizes.appbarHeight),
         child: CustomAppBar(
@@ -254,7 +254,9 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                       height: 60,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: UIColours.grey.withOpacity(0.1),
+                                        color: UIColours.grey.withValues(
+                                          alpha: 0.1,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Row(
@@ -396,12 +398,7 @@ class _SignupScreenState extends State<SignupScreen> with RouteAware {
                                     ),
                                     CustomTextButton(
                                       buttonText: UIStrings.loginButton,
-                                      onTextButtonPressed: () {
-                                        callNextScreenAndClearStack(
-                                          context,
-                                          AuthScreen(),
-                                        );
-                                      },
+                                      onTextButtonPressed: widget.onSwitchTab,
                                     ),
                                   ],
                                 ),

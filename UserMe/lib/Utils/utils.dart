@@ -54,11 +54,13 @@ class UIStrings {
 class UIColours {
   static Color primaryColor = const Color(0xFF4a90e2);
   static Color grey = const Color(0xB3727272);
-  static Color black = Colors.black;
+  static Color black = const Color.fromARGB(255, 0, 0, 0);
   static Color white = Colors.white;
   static Color greyShade = Colors.grey.shade600;
   static Color errorColor = Colors.red;
   static Color successColor = Colors.green;
+  static Color transparent = Colors.transparent;
+  static Color blackShade = const Color.fromARGB(255, 22, 22, 22);
 }
 
 class UISizes {
@@ -70,7 +72,7 @@ class UISizes {
   static double mainSpacing = 20.0;
   static double midSpacing = 18.0;
   static double subSpacing = 10.0;
-  static double minSpacing = 8.0;
+  static double minSpacing = 5.0;
   static double inputRadius = 10.0;
   static double aroundPadding = 20.0;
   static double verticalInputPadding = 15.0;
@@ -83,56 +85,35 @@ class UISizes {
 }
 
 class UIIcons {
-  static Icon logoIcon = const Icon(
-    Icons.settings,
-    size: 50,
-    color: Colors.white,
-  );
+  static Icon logoIcon = const Icon(Icons.settings, size: 50);
   static Icon emailIcon = const Icon(Icons.email_outlined);
   static Icon passwordIcon = const Icon(Icons.lock_outline);
   static Icon passwordEyeIcon = Icon(
     Icons.visibility_outlined,
-    color: UIColours.grey,
+    color: Colors.grey,
   );
   static Icon passwordEyeDisabledIcon = Icon(
     Icons.visibility_off_outlined,
-    color: UIColours.grey,
+    color: Colors.grey,
   );
   static Icon settingsIcon = const Icon(Icons.settings_outlined);
   static Icon arrowBtnIcon = Icon(
     Icons.arrow_forward_ios_outlined,
     size: UISizes.trailIconSize,
   );
-  static Icon dltBtnIcon = Icon(
-    Icons.delete_outlined,
-    color: UIColours.errorColor,
-  );
+  static Icon dltBtnIcon = Icon(Icons.delete_outlined, color: Colors.red);
 
-  static Icon addIcon = Icon(
-    Icons.add_outlined,
-    color: UIColours.white,
-    size: 17,
-  );
+  static Icon addIcon = Icon(Icons.add_outlined, color: Colors.white, size: 17);
   static Icon editIcon = Icon(
     Icons.edit_outlined,
-    color: UIColours.white,
+    color: Colors.white,
     size: 17,
   );
 
-  static Icon favorite = Icon(
-    Icons.favorite_border,
-    color: UIColours.errorColor,
-  );
-  static Icon favoriteFilled = Icon(
-    Icons.favorite,
-    color: UIColours.errorColor,
-  );
+  static Icon favorite = Icon(Icons.favorite_border, color: Colors.red);
+  static Icon favoriteFilled = Icon(Icons.favorite, color: Colors.red);
 
-  static Icon filter = Icon(
-    Icons.sort_by_alpha_rounded,
-    color: UIColours.black,
-    size: 25,
-  );
+  static Icon filter = Icon(Icons.sort_by_alpha_rounded, size: 25);
 
   static Icon tileThemeIcon = Icon(Icons.brightness_6_outlined);
   static Icon fnameIcon = const Icon(Icons.person);

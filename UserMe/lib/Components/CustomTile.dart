@@ -36,10 +36,7 @@ class _CustomTileState extends State<CustomTile> {
       leading: widget.leadingIcon,
       title: Text(
         widget.title,
-        style: TextStyle(
-          fontSize: UISizes.tileTitle,
-          color: widget.textColor ?? UIColours.black,
-        ),
+        style: TextStyle(fontSize: UISizes.tileTitle, color: widget.textColor),
       ),
       subtitle: widget.subTitle.isNotNullOrEmpty
           ? Text(
@@ -62,7 +59,7 @@ class _CustomTileState extends State<CustomTile> {
       onTap: widget.onTap,
       shape: Border(
         bottom: BorderSide(
-          color: UIColours.greyShade.withOpacity(0.3),
+          color: UIColours.grey.withValues(alpha: 0.3),
           width: 0.5,
         ),
       ),

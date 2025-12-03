@@ -20,22 +20,17 @@ class CustomAppBar extends StatefulWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: UIColours.white,
-      child: AppBar(
-        backgroundColor: UIColours.white,
-        forceMaterialTransparency: true,
-        actions: widget.suffixIcon != null ? [widget.suffixIcon!] : [],
-        centerTitle: widget.isCenter ?? true,
-        title: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Text(
-            widget.appbarTitle,
-            style: TextStyle(
-              fontSize: UISizes.titleFontSize,
-              color: UIColours.black,
-              fontWeight: FontWeight.w700,
-            ),
+    return AppBar(
+      forceMaterialTransparency: false,
+      actions: widget.suffixIcon != null ? [widget.suffixIcon!] : [],
+      centerTitle: widget.isCenter ?? true,
+      title: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Text(
+          widget.appbarTitle,
+          style: TextStyle(
+            fontSize: UISizes.titleFontSize,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),

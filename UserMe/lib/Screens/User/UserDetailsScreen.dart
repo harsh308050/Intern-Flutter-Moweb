@@ -22,7 +22,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UIColours.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(UISizes.appbarHeight),
         child: CustomAppBar(

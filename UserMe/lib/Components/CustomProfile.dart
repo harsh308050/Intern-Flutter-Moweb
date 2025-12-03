@@ -31,9 +31,6 @@ class _CustomProfileState extends State<CustomProfile> {
 
   @override
   Widget build(BuildContext context) {
-    // return GestureDetector(
-    //   onTap: ,
-    //   child:
     return Stack(
       children: [
         isFile()

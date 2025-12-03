@@ -1,3 +1,8 @@
+// import 'dart:developer';
+
+import 'package:UserMe/Screens/Theme/ThemeBloc.dart';
+import 'package:UserMe/Screens/Theme/ThemeState.dart';
+import 'package:UserMe/Screens/Theme/Theme_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Components/CM.dart';
 import 'Http/bloc/bloc.dart';
@@ -17,6 +22,8 @@ void main() async {
   await sharedPrefInit();
   runApp(MyApp());
 }
+
+final ThemeBloc themeBloc = ThemeBloc();
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
@@ -41,10 +48,16 @@ class MyApp extends StatelessWidget {
           );
         }
       },
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        home: SplashScreen(),
-        debugShowCheckedModeBanner: false,
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        bloc: themeBloc,
+        builder: (context, themeState) => MaterialApp(
+          navigatorKey: navigatorKey,
+          home: SplashScreen(),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeState.themeMode,
+          debugShowCheckedModeBanner: false,
+        ),
       ),
     );
   }

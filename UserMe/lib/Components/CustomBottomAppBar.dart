@@ -10,7 +10,6 @@ class CustomBottomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      backgroundColor: UIColours.white,
       selectedItemColor: UIColours.primaryColor,
       selectedLabelStyle: TextStyle(
         fontSize: UISizes.labelFontSize,

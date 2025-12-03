@@ -35,7 +35,6 @@ Widget userInfoTile({
                 overflow: TextOverflow.visible,
                 style: TextStyle(
                   fontSize: UISizes.tileTitle - 1,
-                  color: UIColours.black,
                   fontWeight: FontWeight.w500,
                 ),
               ),

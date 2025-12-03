@@ -43,7 +43,6 @@ class _OnBoardingState extends State<OnBoarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UIColours.white,
       body: SafeArea(
         child: Stack(
           children: <Widget>[
@@ -103,7 +102,6 @@ class _OnBoardingState extends State<OnBoarding> {
               right: 20,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: UIColours.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -151,7 +149,7 @@ class _OnBoardingState extends State<OnBoarding> {
     double height = MediaQuery.of(context).size.height;
 
     return Container(
-      color: UIColours.primaryColor.withOpacity(0.15),
+      color: UIColours.primaryColor.withValues(alpha: 0.15),
       child: SafeArea(
         child: Stack(
           children: [

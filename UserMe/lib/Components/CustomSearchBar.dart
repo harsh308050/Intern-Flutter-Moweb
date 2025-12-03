@@ -35,14 +35,12 @@ class CustomSearchBar extends StatelessWidget {
                   )
                 : null,
 
-            fillColor: UIColours.white,
-            filled: true,
             hintText: hintText,
             focusColor: UIColours.primaryColor,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(UISizes.inputRadius),
               borderSide: BorderSide(
-                color: UIColours.greyShade.withOpacity(0.5),
+                color: UIColours.grey.withValues(alpha: 0.5),
                 width: 1.5,
               ),
             ),
@@ -54,7 +52,7 @@ class CustomSearchBar extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(UISizes.inputRadius),
               borderSide: BorderSide(
-                color: UIColours.greyShade.withOpacity(0.5),
+                color: UIColours.grey.withValues(alpha: 0.5),
               ),
             ),
           ),

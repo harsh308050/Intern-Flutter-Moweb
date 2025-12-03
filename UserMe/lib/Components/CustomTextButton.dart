@@ -4,10 +4,12 @@ import '../../utils/utils.dart';
 class CustomTextButton extends StatelessWidget {
   final VoidCallback? onTextButtonPressed;
   final String buttonText;
-
+  final Color? buttonColor;
   const CustomTextButton({
     super.key,
     this.onTextButtonPressed,
+    this.buttonColor,
+
     required this.buttonText,
   });
 
@@ -19,7 +21,7 @@ class CustomTextButton extends StatelessWidget {
         buttonText,
         style: TextStyle(
           fontSize: UISizes.inputFontSize,
-          color: UIColours.primaryColor,
+          color: buttonColor ?? UIColours.primaryColor,
           fontWeight: FontWeight.w800,
         ),
       ),

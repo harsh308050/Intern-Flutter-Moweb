@@ -51,7 +51,6 @@ class _AllUsersDetailsScreenState extends State<AllUsersDetailsScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: UIColours.white,
         appBar: PreferredSize(
           preferredSize: Size(double.infinity, UISizes.appbarHeight),
           child: CustomAppBar(appbarTitle: UIStrings.appbarUserDetails),
@@ -83,8 +82,8 @@ class _AllUsersDetailsScreenState extends State<AllUsersDetailsScreen> {
                                         ),
                                       ),
                                       child: CircleAvatar(
-                                        radius: 60,
                                         backgroundColor: UIColours.white,
+                                        radius: 60,
                                         backgroundImage:
                                             (user?.image.isNotNullOrEmpty ??
                                                 false)

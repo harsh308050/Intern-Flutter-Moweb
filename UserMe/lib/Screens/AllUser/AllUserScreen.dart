@@ -8,8 +8,8 @@ import '../../Components/CustomAppBar.dart';
 import '../../Components/CustomLoader.dart';
 import '../../Utils/extensions.dart';
 import '../../Utils/utils.dart';
-import '../../components/CustomSearchBar.dart';
-import '../../components/CustomTile.dart';
+import '../../Components/CustomSearchBar.dart';
+import '../../Components/CustomTile.dart';
 
 import 'bloc/bloc.dart';
 import 'bloc/event.dart';
@@ -92,7 +92,6 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UIColours.white,
       floatingActionButton: Row(
         mainAxisAlignment: .spaceBetween,
         crossAxisAlignment: .end,
@@ -170,7 +169,6 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                 ),
               PopupMenuButton<String>(
-                color: UIColours.white,
                 icon: UIIcons.filter,
 
                 onSelected: (String value) {
@@ -203,7 +201,7 @@ class _UserScreenState extends State<UserScreen> {
                       style: TextStyle(
                         color: selectedOrder == 'asc'
                             ? UIColours.primaryColor
-                            : UIColours.black,
+                            : null,
                       ),
                     ),
                   ),
@@ -214,7 +212,7 @@ class _UserScreenState extends State<UserScreen> {
                       style: TextStyle(
                         color: selectedOrder == 'desc'
                             ? UIColours.primaryColor
-                            : UIColours.black,
+                            : null,
                       ),
                     ),
                   ),
@@ -237,14 +235,13 @@ class _UserScreenState extends State<UserScreen> {
 
         child: SafeArea(
           child: Container(
-            color: UIColours.white,
             padding: EdgeInsets.only(
-              top: UISizes.aroundPadding,
+              top: UISizes.aroundPadding - 10,
               left: UISizes.aroundPadding,
               right: UISizes.aroundPadding,
             ),
             child: Column(
-              spacing: UISizes.subSpacing,
+              spacing: UISizes.minSpacing,
               children: [
                 CustomSearchBar(
                   focusNode: searchFocusNode,
@@ -308,7 +305,6 @@ class _UserScreenState extends State<UserScreen> {
                       }
                       return Expanded(
                         child: RefreshIndicator(
-                          color: UIColours.white,
                           backgroundColor: UIColours.primaryColor,
                           elevation: 4.0,
 
@@ -320,9 +316,6 @@ class _UserScreenState extends State<UserScreen> {
                             return Future.value();
                           },
                           child: ListView(
-                            padding: EdgeInsets.only(
-                              bottom: UISizes.aroundPadding * 3,
-                            ),
                             shrinkWrap: true,
                             controller: scrollController,
                             children: [
@@ -332,10 +325,6 @@ class _UserScreenState extends State<UserScreen> {
                                 itemCount: list.length,
                                 itemBuilder: (context, index) {
                                   return Container(
-                                    decoration: BoxDecoration(
-                                      color: UIColours.white,
-                                    ),
-
                                     child:
                                         Column(
                                           spacing: UISizes.subSpacing,
@@ -419,8 +408,8 @@ class _UserScreenState extends State<UserScreen> {
                               ),
                               if (state.loadMore == Status.busy)
                                 Padding(
-                                  padding: EdgeInsets.all(
-                                    UISizes.aroundPadding,
+                                  padding: EdgeInsets.only(
+                                    bottom: UISizes.aroundPadding * 3,
                                   ),
                                   child: Center(child: CustomLoader()),
                                 ),

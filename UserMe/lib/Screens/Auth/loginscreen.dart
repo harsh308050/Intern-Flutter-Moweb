@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:UserMe/Screens/Auth/signupscreen.dart';
 import 'package:UserMe/Screens/Home/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +20,8 @@ import 'data/repository.dart';
 import 'model/user_model.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final VoidCallback? onSwitchTab;
+  const LoginScreen({super.key, this.onSwitchTab});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -45,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UIColours.white,
       body: BlocListener<UserBloc, AppState>(
         bloc: userBloc,
         listener: (context, state) async {
@@ -173,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonText: UIStrings.signupButton,
                             onTextButtonPressed: () {
                               FocusScope.of(context).unfocus();
-                              callNextScreen(context, SignupScreen());
+                              widget.onSwitchTab;
                             },
                           ),
                         ],

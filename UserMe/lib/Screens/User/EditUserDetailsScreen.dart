@@ -57,7 +57,6 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60),
         child: CustomAppBar(appbarTitle: UIStrings.appbarEditProfile),
@@ -137,6 +136,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
                               },
                             ),
                             CustomTextfield(
+                              enabled: false,
                               focusNode: emailFocusNode,
                               controller: emailController,
                               hintText: UIStrings.emailHint,

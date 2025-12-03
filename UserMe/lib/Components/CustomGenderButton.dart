@@ -29,9 +29,7 @@ class _GenderbuttonState extends State<Genderbutton> {
       width: width * 0.4,
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
-        color: widget.isMale!
-            ? UIColours.white
-            : UIColours.white.withOpacity(0),
+        color: widget.isMale! ? UIColours.primaryColor : UIColours.transparent,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
@@ -42,7 +40,9 @@ class _GenderbuttonState extends State<Genderbutton> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: widget.isMale! ? UIColours.black : UIColours.greyShade,
+              color: widget.isMale!
+                  ? UIColours.white
+                  : UIColours.grey.withValues(alpha: 0.9),
             ),
           ),
         ],

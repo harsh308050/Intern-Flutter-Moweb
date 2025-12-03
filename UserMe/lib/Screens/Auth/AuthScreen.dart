@@ -13,8 +13,11 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen>
     with SingleTickerProviderStateMixin {
   static List<Tab> tabs = <Tab>[Tab(text: 'Login'), Tab(text: 'Signup')];
-  final List<Widget> tabScreens = [const LoginScreen(), SignupScreen()];
 
+  List<Widget> get tabScreens => [
+    LoginScreen(onSwitchTab: () => _tabController.animateTo(1)),
+    SignupScreen(onSwitchTab: () => _tabController.animateTo(0)),
+  ];
   late TabController _tabController;
 
   @override
@@ -26,7 +29,6 @@ class _AuthScreenState extends State<AuthScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UIColours.white,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(top: UISizes.aroundPadding),
@@ -35,7 +37,7 @@ class _AuthScreenState extends State<AuthScreen>
               TabBar(
                 controller: _tabController,
                 tabs: tabs,
-                dividerColor: Colors.transparent,
+                dividerColor: UIColours.transparent,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorColor: UIColours.primaryColor,
                 labelColor: UIColours.primaryColor,
