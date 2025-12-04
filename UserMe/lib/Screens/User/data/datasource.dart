@@ -41,7 +41,7 @@ class DataSource {
 
     Map<String, dynamic> params = {
       "refreshToken": oldRefreshToken,
-      'expiresInMins': 1,
+      'expiresInMins': 30,
     };
 
     final response = await postMethod(
