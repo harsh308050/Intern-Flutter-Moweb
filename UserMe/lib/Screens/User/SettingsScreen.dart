@@ -34,9 +34,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   void initState() {
-    log(
-      " Settings Screen Initialized================================= ${user}",
-    );
     // if (user == null) {
     userBloc.add(UserDetailsEvent());
     // }
@@ -132,7 +129,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           ],
                         ).onTap(() {
-                          callNextScreen(context, UserDetailsScreen());
+                          callNextScreenWithResult(
+                            context,
+                            UserDetailsScreen(),
+                          ).then((value) {
+                            if (value == true) {
+                              setState(() {});
+                            }
+                          });
                         }),
 
                         Column(

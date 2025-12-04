@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import '../../Components/CM.dart';
 import '../../Components/CustomTextButton.dart';
 import '../../Components/CustomUserDetailsTile.dart';
+import '../../Utils/SharedPrefHelper.dart';
 import '../../Utils/utils.dart';
-import '../../utils/SharedPrefHelper.dart';
 import '../../components/CustomAppBar.dart';
-
-import 'model/user_res_model.dart';
+import 'package:UserMe/main.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   const UserDetailsScreen({super.key});
@@ -18,107 +17,124 @@ class UserDetailsScreen extends StatefulWidget {
 }
 
 class _UserDetailsScreenState extends State<UserDetailsScreen> {
-  UserResModel? user = sharedPrefGetUser();
+  @override
+  void initState() {
+    user = sharedPrefGetUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(UISizes.appbarHeight),
-        child: CustomAppBar(
-          isCenter: true,
-          suffixIcon: CustomTextButton(
-            buttonText: UIStrings.editBtn,
-            onTextButtonPressed: () {
-              callNextScreen(
-                context,
-                EditUserDetailsScreen(userid: user?.id.toString() ?? ''),
-              );
-            },
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) Navigator.pop(context, true);
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(UISizes.appbarHeight),
+          child: CustomAppBar(
+            isPassingData: true,
+            isCenter: true,
+            suffixIcon: CustomTextButton(
+              buttonText: UIStrings.editBtn,
+              onTextButtonPressed: () {
+                callNextScreenWithResult(
+                  context,
+                  EditUserDetailsScreen(userid: user?.id.toString() ?? ''),
+                ).then((value) {
+                  if (value == true) {
+                    setState(() {});
+                  }
+                });
+              },
+            ),
+            appbarTitle: UIStrings.appbarUserDetails,
           ),
-          appbarTitle: UIStrings.appbarUserDetails,
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(UISizes.aroundPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: UIColours.grey,
-                        border: Border.all(color: UIColours.grey, width: 2),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(UISizes.aroundPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: UIColours.grey,
+                          border: Border.all(color: UIColours.grey, width: 2),
+                        ),
+                        child: CircleAvatar(
+                          radius: 60,
+                          backgroundColor: UIColours.white,
+                          backgroundImage:
+                              (user?.image.isNotNullOrEmpty ?? false)
+                              ? NetworkImage(user!.image!)
+                              : null,
+                          child: (user?.image == null || user!.image!.isEmpty)
+                              ? Icon(
+                                  Icons.person,
+                                  size: 60,
+                                  color: UIColours.grey,
+                                )
+                              : null,
+                        ),
                       ),
-                      child: CircleAvatar(
-                        radius: 60,
-                        backgroundColor: UIColours.white,
-                        backgroundImage: (user?.image.isNotNullOrEmpty ?? false)
-                            ? NetworkImage(user!.image!)
-                            : null,
-                        child: (user?.image == null || user!.image!.isEmpty)
-                            ? Icon(
-                                Icons.person,
-                                size: 60,
-                                color: UIColours.grey,
-                              )
-                            : null,
+                      SizedBox(height: UISizes.mainSpacing * 2),
+                      Text(
+                        '${user?.firstName} ${user?.lastName}',
+                        style: TextStyle(
+                          fontSize: UISizes.tileTitle + 5,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: UISizes.mainSpacing * 2),
-                    Text(
-                      '${user?.firstName} ${user?.lastName}',
-                      style: TextStyle(
-                        fontSize: UISizes.tileTitle + 5,
-                        fontWeight: FontWeight.bold,
+                      SbhMin(),
+                      Text(
+                        user?.email ?? '',
+                        style: TextStyle(
+                          color: UIColours.grey,
+                          fontSize: UISizes.inputFontSize,
+                        ),
                       ),
-                    ),
-                    SbhMin(),
-                    Text(
-                      user?.email ?? '',
-                      style: TextStyle(
-                        color: UIColours.grey,
-                        fontSize: UISizes.inputFontSize,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              SbhMain(),
-              SbhMain(),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: UISizes.subSpacing + 5,
+                SbhMain(),
+                SbhMain(),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: UISizes.subSpacing + 5,
+                  ),
+                  child: Column(
+                    children: [
+                      userInfoTile(
+                        icon: Icons.person_outline,
+                        title: UIStrings.fname,
+                        value: user?.firstName ?? '',
+                      ),
+                      userInfoTile(
+                        icon: Icons.tag_outlined,
+                        title: UIStrings.username,
+                        value: user?.username ?? '',
+                      ),
+                      userInfoTile(
+                        icon: Icons.wc_outlined,
+                        title: UIStrings.gender,
+                        value: user?.gender ?? '',
+                      ),
+                      userInfoTile(
+                        icon: Icons.email_outlined,
+                        title: UIStrings.emailLabel,
+                        value: user?.email ?? '',
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    userInfoTile(
-                      icon: Icons.person_outline,
-                      title: UIStrings.fname,
-                      value: user?.firstName ?? '',
-                    ),
-                    userInfoTile(
-                      icon: Icons.tag_outlined,
-                      title: UIStrings.username,
-                      value: user?.username ?? '',
-                    ),
-                    userInfoTile(
-                      icon: Icons.wc_outlined,
-                      title: UIStrings.gender,
-                      value: user?.gender ?? '',
-                    ),
-                    userInfoTile(
-                      icon: Icons.email_outlined,
-                      title: UIStrings.emailLabel,
-                      value: user?.email ?? '',
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

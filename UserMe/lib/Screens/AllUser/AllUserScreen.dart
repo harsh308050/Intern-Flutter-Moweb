@@ -3,6 +3,7 @@ import 'package:UserMe/Components/CM.dart';
 import 'package:UserMe/Screens/AllUser/AllUsersDetailsScreen.dart';
 import 'package:UserMe/Screens/Auth/signupscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Components/CustomAppBar.dart';
 import '../../Components/CustomLoader.dart';
@@ -29,7 +30,7 @@ class _UserScreenState extends State<UserScreen> {
     repository: Repository(DataSource()),
   );
   String? selectedOrder;
-
+  bool hasUserTappedSearch = false;
   ValueNotifier<int> scrollNotifier = ValueNotifier<int>(-1);
 
   TextEditingController searchController = TextEditingController();
@@ -74,9 +75,12 @@ class _UserScreenState extends State<UserScreen> {
     } else if (current < mid) {
       scrollNotifier.value = 0;
     }
-    searchFocusNode.unfocus();
-    if (current == min && searchFocusNode.hasFocus == false) {
-      searchFocusNode.requestFocus();
+    if (searchFocusNode.hasFocus && current > 200) {
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+      hasUserTappedSearch = true;
+    }
+    if (hasUserTappedSearch && current < 200) {
+      SystemChannels.textInput.invokeMethod('TextInput.show');
     }
   }
 

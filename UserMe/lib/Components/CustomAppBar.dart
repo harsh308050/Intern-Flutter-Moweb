@@ -6,10 +6,12 @@ class CustomAppBar extends StatefulWidget {
   final String appbarTitle;
   final Widget? suffixIcon;
   final bool? isCenter;
+  final bool? isPassingData;
   const CustomAppBar({
     super.key,
     required this.appbarTitle,
     this.suffixIcon,
+    this.isPassingData,
     this.isCenter,
   });
 
@@ -22,6 +24,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       forceMaterialTransparency: false,
+      leading: widget.isPassingData == true
+          ? IconButton(
+              icon: Icon(Icons.arrow_back, color: UIColours.black),
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+            )
+          : null,
       actions: widget.suffixIcon != null ? [widget.suffixIcon!] : [],
       centerTitle: widget.isCenter ?? true,
       title: Padding(

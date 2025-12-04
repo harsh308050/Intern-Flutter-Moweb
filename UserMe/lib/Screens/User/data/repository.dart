@@ -1,13 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:UserMe/Utils/SharedPrefHelper.dart';
-import 'package:UserMe/Utils/utils.dart';
-import 'package:UserMe/utils/APIConstant.dart';
 import 'package:http/http.dart';
 
-import '../../../Components/CM.dart';
 import '../../../Http/apires.dart';
-import '../../../main.dart';
 import '../model/user_res_model.dart';
 import 'datasource.dart';
 

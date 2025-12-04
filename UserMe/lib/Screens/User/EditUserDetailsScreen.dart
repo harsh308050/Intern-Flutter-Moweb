@@ -14,11 +14,10 @@ import 'bloc/event.dart';
 import 'bloc/state.dart';
 import 'data/datasource.dart';
 import 'data/repository.dart';
-import 'model/user_res_model.dart';
+import 'package:UserMe/main.dart';
 
-// ignore: must_be_immutable
 class EditUserDetailsScreen extends StatefulWidget {
-  String userid = sharedPrefGetUser()?.id.toString() ?? '';
+  String userid = user?.id.toString() ?? '';
   EditUserDetailsScreen({super.key, required this.userid});
 
   @override
@@ -46,12 +45,11 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    UserResModel? user = sharedPrefGetUser();
     fnameController.text = user?.firstName ?? '';
     lnameController.text = user?.lastName ?? '';
+    ageController.text = user?.age?.toString() ?? '';
     genderController.text = user?.gender?.toString() ?? '';
     emailController.text = user?.email ?? '';
-    ageController.text = user?.age?.toString() ?? '';
   }
 
   @override
@@ -69,7 +67,8 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
               sharedPrefKeys.userDataKey,
               jsonEncode(state.userdetails?.toJson()),
             );
-            Navigator.pop(context);
+            user = state.userdetails;
+            Navigator.pop(context, true);
             showSnackBar(
               context,
               "User details edited successfully",
