@@ -13,7 +13,7 @@ class DataSource {
     Map<String, dynamic> params = {
       "username": username,
       "password": password,
-      'expiresInMins': 1,
+      'expiresInMins': 30,
     };
     final response = await postMethod(
       endpoint: APIConstant.login,
