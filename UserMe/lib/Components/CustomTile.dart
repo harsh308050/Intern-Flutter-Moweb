@@ -36,7 +36,11 @@ class _CustomTileState extends State<CustomTile> {
       leading: widget.leadingIcon,
       title: Text(
         widget.title,
-        style: TextStyle(fontSize: UISizes.tileTitle, color: widget.textColor),
+        style: TextStyle(
+          fontSize: UISizes.tileTitle,
+          color: widget.textColor,
+          fontWeight: FontWeight.w500,
+        ),
       ),
       subtitle: widget.subTitle.isNotNullOrEmpty
           ? Text(

@@ -34,10 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   void initState() {
-    // if (user == null) {
     userBloc.add(UserDetailsEvent());
-    // }
-
     super.initState();
   }
 

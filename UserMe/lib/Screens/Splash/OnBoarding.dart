@@ -63,34 +63,30 @@ class _OnBoardingState extends State<OnBoarding> {
                     AnimatedOpacity(
                       opacity: currentIndex == 0 ? 0 : 1,
                       duration: Duration(milliseconds: 300),
-                      child: Container(
-                        height: 50,
-                        width: 100,
-                        child: CustomButton(
-                          onButtonPressed: () {
-                            setState(() {
-                              if (currentIndex > 0) {
-                                updateCurrentPageIndex(currentIndex - 1);
-                              }
-                            });
-                          },
-                          buttonText: "Back",
-                        ),
+                      child: CustomButton(
+                        btnWidth: 100,
+                        onButtonPressed: () {
+                          setState(() {
+                            if (currentIndex > 0) {
+                              updateCurrentPageIndex(currentIndex - 1);
+                            }
+                          });
+                        },
+                        buttonText: "Back",
                       ),
                     ),
-                    Container(
-                      height: 50,
-                      width: 100,
-                      child: AnimatedOpacity(
-                        opacity: currentIndex == onboarding.length - 1 ? 0 : 1,
-                        duration: Duration(milliseconds: 300),
-                        child: CustomButton(
-                          onButtonPressed: () {
+                    AnimatedOpacity(
+                      opacity: currentIndex == onboarding.length - 1 ? 0 : 1,
+                      duration: Duration(milliseconds: 300),
+                      child: CustomButton(
+                        btnWidth: 100,
+                        onButtonPressed: () {
+                          if (currentIndex < onboarding.length - 1) {
                             updateCurrentPageIndex(currentIndex + 1);
-                          },
+                          }
+                        },
 
-                          buttonText: "Next",
-                        ),
+                        buttonText: "Next",
                       ),
                     ),
                   ],

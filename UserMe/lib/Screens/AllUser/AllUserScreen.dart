@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:UserMe/Components/CM.dart';
+import 'package:UserMe/Components/CustomFloatingButton.dart';
 import 'package:UserMe/Screens/AllUser/AllUsersDetailsScreen.dart';
 import 'package:UserMe/Screens/Auth/signupscreen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import '../../Utils/utils.dart';
 import '../../Components/CustomSearchBar.dart';
 import '../../Components/CustomTile.dart';
 
+import '../Notification/NotificationScreen.dart';
 import 'bloc/bloc.dart';
 import 'bloc/event.dart';
 import 'bloc/state.dart';
@@ -19,7 +21,8 @@ import 'data/datasource.dart';
 import 'data/repository.dart';
 
 class UserScreen extends StatefulWidget {
-  const UserScreen({super.key});
+  bool? isFromNotificationTap;
+  UserScreen({super.key, this.isFromNotificationTap});
 
   @override
   State<UserScreen> createState() => _UserScreenState();
@@ -40,6 +43,11 @@ class _UserScreenState extends State<UserScreen> {
   @override
   void initState() {
     super.initState();
+    if (widget.isFromNotificationTap == true) {
+      callNextScreenWithResult(context, NotificationScreen()).then((value) {
+        widget.isFromNotificationTap = value;
+      });
+    }
     getAllUsersBloc.add(getAllUsersEvent(skip: 0));
     searchFocusNode.unfocus();
     scrollController.addListener(scrollPosition);
@@ -146,14 +154,14 @@ class _UserScreenState extends State<UserScreen> {
             },
           ),
 
-          FloatingActionButton(
+          CustomFloatingButton(
             heroTag: "btn2",
-            onPressed: () {
+            onTap: () {
               searchFocusNode.unfocus();
               callNextScreen(context, SignupScreen(isFromAddUser: true));
             },
-            backgroundColor: UIColours.primaryColor,
-            child: Icon(Icons.add, color: UIColours.white),
+            color: UIColours.primaryColor,
+            icon: UIIcons.addIcon,
           ),
         ],
       ),
@@ -161,68 +169,78 @@ class _UserScreenState extends State<UserScreen> {
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: CustomAppBar(
           appbarTitle: UIStrings.appbarUsers,
-          suffixIcon: Stack(
+          suffixIcon: Row(
             children: [
-              if (selectedOrder.isNotNull)
-                Positioned(
-                  right: 8,
-                  top: 8,
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: BoxDecoration(
-                      color: UIColours.primaryColor,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-              PopupMenuButton<String>(
-                icon: UIIcons.filter,
-
-                onSelected: (String value) {
-                  selectedOrder = value;
-                  clearSearch();
-                  setState(() {});
-                  if (value != 'asc' && value != 'desc') {
-                    getAllUsersBloc.add(getAllUsersEvent());
-                  } else {
-                    getAllUsersBloc.add(getAllUsersEvent(order: value));
-                  }
+              IconButton(
+                icon: UIIcons.notificationIcon,
+                onPressed: () {
+                  callNextScreen(context, NotificationScreen());
                 },
+              ),
+              Stack(
+                children: [
+                  if (selectedOrder.isNotNull)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: UIColours.primaryColor,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  PopupMenuButton<String>(
+                    icon: UIIcons.filter,
 
-                itemBuilder: (BuildContext context) => [
-                  PopupMenuItem(
-                    enabled: false,
-                    child: Text(
-                      "Sort by",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: UIColours.primaryColor,
-                      ),
-                    ),
-                  ),
+                    onSelected: (String value) {
+                      selectedOrder = value;
+                      clearSearch();
+                      setState(() {});
+                      if (value != 'asc' && value != 'desc') {
+                        getAllUsersBloc.add(getAllUsersEvent());
+                      } else {
+                        getAllUsersBloc.add(getAllUsersEvent(order: value));
+                      }
+                    },
 
-                  PopupMenuItem<String>(
-                    value: 'asc',
-                    child: Text(
-                      'A-Z',
-                      style: TextStyle(
-                        color: selectedOrder == 'asc'
-                            ? UIColours.primaryColor
-                            : null,
+                    itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        enabled: false,
+                        child: Text(
+                          "Sort by",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: UIColours.primaryColor,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  PopupMenuItem<String>(
-                    value: 'desc',
-                    child: Text(
-                      'Z-A',
-                      style: TextStyle(
-                        color: selectedOrder == 'desc'
-                            ? UIColours.primaryColor
-                            : null,
+
+                      PopupMenuItem<String>(
+                        value: 'asc',
+                        child: Text(
+                          'A-Z',
+                          style: TextStyle(
+                            color: selectedOrder == 'asc'
+                                ? UIColours.primaryColor
+                                : null,
+                          ),
+                        ),
                       ),
-                    ),
+                      PopupMenuItem<String>(
+                        value: 'desc',
+                        child: Text(
+                          'Z-A',
+                          style: TextStyle(
+                            color: selectedOrder == 'desc'
+                                ? UIColours.primaryColor
+                                : null,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -323,6 +341,9 @@ class _UserScreenState extends State<UserScreen> {
                             return Future.value();
                           },
                           child: ListView(
+                            padding: EdgeInsets.only(
+                              bottom: UISizes.aroundPadding * 2,
+                            ),
                             shrinkWrap: true,
                             controller: scrollController,
                             children: [
@@ -413,13 +434,9 @@ class _UserScreenState extends State<UserScreen> {
                                   );
                                 },
                               ),
+                              SbhSub(),
                               if (state.loadMore == Status.busy)
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: UISizes.aroundPadding * 3,
-                                  ),
-                                  child: Center(child: CustomLoader()),
-                                ),
+                                Center(child: CustomLoader()),
                             ],
                           ),
                         ),

@@ -5,7 +5,8 @@ import '../AllUser/AllUserScreen.dart';
 import '../User/SettingsScreen.dart';
 
 class Homepage extends StatefulWidget {
-  Homepage({super.key});
+  final bool? isFromNotificationTap;
+  Homepage({super.key, this.isFromNotificationTap});
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -17,7 +18,11 @@ class _HomepageState extends State<Homepage> {
   @override
   void initState() {
     super.initState();
-    screen = [UserScreen(), SettingsScreen()];
+
+    screen = [
+      UserScreen(isFromNotificationTap: widget.isFromNotificationTap),
+      SettingsScreen(),
+    ];
   }
 
   @override

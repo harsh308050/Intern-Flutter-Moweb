@@ -10,6 +10,10 @@ class UIStrings {
 
   static String emailHint = "Enter your email";
   static String usernameHint = "Enter your username";
+  static String titleHint = "Enter Title";
+  static String descriptionHint = "Enter Description";
+  static String descriptionLabel = "Description";
+  static String titleLabel = "Title";
   static String passwordHint = "Enter your password";
   static String fnameHint = "John";
   static String lnameHint = "Type here...";
@@ -41,6 +45,8 @@ class UIStrings {
   static String appbarEditProfile = "Edit Profile";
   static String appbarUsers = "Users";
   static String appbarSettings = "Settings";
+  static String appbarNotification = "Notifications";
+
   static String tileProfile = "Profile";
   static String settingsGeneral = "GENERAL";
   static String settingsAccount = "ACCOUNT";
@@ -49,6 +55,10 @@ class UIStrings {
   static String tileDelete = "Delete Account";
 
   static String loginFailed = "Login failed. Please check your credentials";
+  static String noNotificationsAvailable = "No Notifications Available";
+
+  static String setDateBtn = "Set Date";
+  static String setTimeBtn = "Set Time";
 }
 
 class UIColours {
@@ -87,6 +97,7 @@ class UISizes {
 class UIIcons {
   static Icon logoIcon = const Icon(Icons.settings, size: 50);
   static Icon emailIcon = const Icon(Icons.email_outlined);
+  static Icon notificationIcon = Icon(Icons.notifications_active_outlined);
   static Icon passwordIcon = const Icon(Icons.lock_outline);
   static Icon passwordEyeIcon = Icon(
     Icons.visibility_outlined,
@@ -103,12 +114,16 @@ class UIIcons {
   );
   static Icon dltBtnIcon = Icon(Icons.delete_outlined, color: Colors.red);
 
-  static Icon addIcon = Icon(Icons.add_outlined, color: Colors.white, size: 17);
+  static Icon addIcon = Icon(Icons.add_outlined, color: Colors.white);
   static Icon editIcon = Icon(
     Icons.edit_outlined,
     color: Colors.white,
     size: 17,
   );
+
+  static Icon calender = Icon(Icons.calendar_month_outlined);
+  static Icon send = Icon(Icons.send_rounded);
+  static Icon close = Icon(Icons.close, color: UIColours.white);
 
   static Icon favorite = Icon(Icons.favorite_border, color: Colors.red);
   static Icon favoriteFilled = Icon(Icons.favorite, color: Colors.red);
@@ -130,6 +145,7 @@ class AssetsPath {
 
 class sharedPrefKeys {
   static String userDataKey = "user";
+  static String notifications = "notifications";
   static String accessTokenKey = "accessToken";
   static String refreshTokenKey = "refreshToken";
 }

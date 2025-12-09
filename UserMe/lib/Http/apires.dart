@@ -5,12 +5,10 @@ class ApiResult<T> {
 
   ApiResult._({this.data, this.error, required this.isSuccess});
 
-  /// Success constructor
   factory ApiResult.success({required T data}) {
     return ApiResult._(data: data, error: null, isSuccess: true);
   }
 
-  /// Failure constructor
   factory ApiResult.failure({required String error}) {
     return ApiResult._(data: null, error: error, isSuccess: false);
   }
@@ -26,7 +24,6 @@ class ApiResult<T> {
     }
   }
 
-  /// Helper: check if success
   bool get isFailure => !isSuccess;
 
   @override

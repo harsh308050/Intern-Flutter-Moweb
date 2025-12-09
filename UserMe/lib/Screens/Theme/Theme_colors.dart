@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: UIColours.white,
+    ),
     appBarTheme: AppBarThemeData(
       backgroundColor: UIColours.white,
       surfaceTintColor: UIColours.white,
@@ -48,6 +50,9 @@ class AppTheme {
     appBarTheme: AppBarThemeData(
       backgroundColor: UIColours.black,
       surfaceTintColor: UIColours.black,
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: UIColours.black,
     ),
     dialogTheme: DialogThemeData(
       backgroundColor: UIColours.blackShade,

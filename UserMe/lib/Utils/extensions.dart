@@ -40,28 +40,24 @@ extension StringOperations on String? {
   }
 }
 
-// extension DateFormating on DateTime {
-//   ///03 Aug 2025
-//   String toFormattedDate() {
-//     return DateFormat('dd MMM yyyy').format(this);
-//   }
-
-//   ///August 03 2025
-//   String toLongFormattedDate() {
-//     return DateFormat('MMMM dd yyyy').format(this);
-//   }
-// }
-
-extension DateFormating on String {
+extension DateFormating on DateTime {
   ///03 Aug 2025
   String toFormattedDate() {
-    DateTime parsedDate = DateTime.parse(this);
-    return DateFormat('dd MMM yyyy').format(parsedDate);
+    return DateFormat('dd MMM yyyy').format(this);
   }
 
   ///August 03 2025
   String toLongFormattedDate() {
-    DateTime parsedDate = DateTime.parse(this);
-    return DateFormat('MMMM dd yyyy').format(parsedDate);
+    return DateFormat('MMMM dd yyyy').format(this);
+  }
+
+  ///03 August 2025
+  String toLongDate() {
+    return DateFormat('dd MMMM yyyy').format(this);
+  }
+
+  ///10:30 AM
+  String toTimeOnly() {
+    return DateFormat('hh:mm a').format(this);
   }
 }

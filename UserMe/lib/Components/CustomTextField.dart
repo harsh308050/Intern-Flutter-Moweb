@@ -11,6 +11,7 @@ class CustomTextfield extends StatelessWidget {
   final VoidCallback? onSuffixPressed;
   final IconData? suffixIcon;
   final num? maxLength;
+  final int maxLine;
   final bool enabled;
   final bool obscureText;
   final String? Function(String?)? validator;
@@ -25,6 +26,7 @@ class CustomTextfield extends StatelessWidget {
     this.onSuffixPressed,
     this.prefixIcon,
     this.suffixIcon,
+    this.maxLine = 1,
     this.obscureText = false,
     this.validator,
     this.enabled = true,
@@ -44,6 +46,7 @@ class CustomTextfield extends StatelessWidget {
         ),
         SizedBox(height: UISizes.minSpacing),
         TextFormField(
+          maxLines: maxLine,
           focusNode: focusNode,
           controller: controller,
           keyboardType: keyboardType,

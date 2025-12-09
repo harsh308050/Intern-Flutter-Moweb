@@ -32,8 +32,6 @@ class CustomThemeMobile extends StatelessWidget {
               topRight: Radius.circular(UISizes.inputRadius * 2 + 5),
             ),
           ),
-          // child: Stack(
-          //   children: [
           child: Container(
             height: 60,
             width: 70,
@@ -50,24 +48,6 @@ class CustomThemeMobile extends StatelessWidget {
               ),
             ),
           ),
-          //     Positioned(
-          //       top: 10,
-          //       left: 24,
-          //       // left: 0,
-          //       right: 24,
-          //       child: Container(
-          //         alignment: Alignment.center,
-          //         height: 6,
-          //         decoration: BoxDecoration(
-          //           color: borderColor,
-          //           borderRadius: BorderRadius.all(
-          //             Radius.circular(UISizes.inputRadius * 2),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ),
         Text(
           themeName,
