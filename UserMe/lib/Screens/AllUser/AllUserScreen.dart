@@ -65,6 +65,10 @@ class _UserScreenState extends State<UserScreen> {
     final current = scrollController.position.pixels;
     final mid = max / 2;
     calculateScroll(current, max, min, mid);
+    pageApiCalling(current, max, callApi);
+  }
+
+  void pageApiCalling(double current, double max, bool callApi) {
     if (current == max) {
       if (selectedOrder.isNotNull ||
           searchController.text.isNotEmpty ||
@@ -98,12 +102,6 @@ class _UserScreenState extends State<UserScreen> {
   }
 
   String? username = "";
-
-  void handleChildCallback(String? firstName) {
-    setState(() {
-      username = firstName;
-    });
-  }
 
   void clearSearch() {
     searchController.clear();

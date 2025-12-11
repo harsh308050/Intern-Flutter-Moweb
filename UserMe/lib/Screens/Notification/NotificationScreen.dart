@@ -57,6 +57,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               allNotifications = AllNotifications.fromJson(
                 jsonDecode(sharedPrefGetData(sharedPrefKeys.notifications)),
               );
+              setState(() {});
             },
             child:
                 allNotifications.notifications == null ||
@@ -73,6 +74,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         )
                         .isEmpty
                 ? ListView(
+                    padding: EdgeInsets.only(top: height / 2),
                     children: [
                       Center(
                         child: Text(
