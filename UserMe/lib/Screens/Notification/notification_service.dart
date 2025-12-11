@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:UserMe/Screens/Home/homepage.dart';
 import 'package:UserMe/Screens/Notification/model/NotificationModel.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import '../../Components/CM.dart';
 import '../../Utils/SharedPrefHelper.dart';
 import '../../Utils/utils.dart';
 import '../../main.dart';
@@ -68,20 +68,27 @@ class NotificationService {
     }
   }
 
-  static void _onNotificationTap(NotificationResponse response) {
-    _initialPayload = response.payload;
+  static _onNotificationTap(NotificationResponse response) {
+    if (response.payload == "schedule notification") {
+      Future.delayed(Duration(seconds: 2), () {
+        callNextScreenAndClearStack(
+          navigatorKey.currentContext!,
+          Homepage(isFromNotificationTap: true),
+        );
+      });
+    }
   }
 
   void handleInitialNavigation() {
-    if (_initialPayload == "schedule notification" ||
-        _initialPayload == "open-notification-screen") {
-      _initialPayload = null;
-
-      navigatorKey.currentState?.push(
-        MaterialPageRoute(
-          builder: (_) => Homepage(isFromNotificationTap: true),
-        ),
-      );
+    if (_initialPayload == "schedule notification") {
+      Future.delayed(Duration(seconds: 2), () {
+        callNextScreenAndClearStack(
+          navigatorKey.currentContext!,
+          Homepage(isFromNotificationTap: true),
+        );
+      });
+      // // Clear the payload after handling to prevent re-navigation
+      // _initialPayload = null;
     }
   }
 

@@ -17,18 +17,16 @@ class _OnBoardingState extends State<OnBoarding> {
   int currentIndex = 0;
   List<Widget> get onboarding => [
     buildPage(
-      image:
-          'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8b25ib2FyZGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
       title: 'Welcome to UserMe',
     ),
     buildPage(
-      image:
-          'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8b25ib2FyZGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60',
+      image: 'https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d',
       title: 'Connect with Harsh',
     ),
     buildPage(
       image:
-          'https://img.freepik.com/free-photo/businesspeople-meeting-doing-greeting-handshake-gesture-office-workspace_482257-101727.jpg?ga=GA1.1.1568003279.1758644444&semt=ais_hybrid&w=740&q=80',
+          'https://img.freepik.com/free-photo/businesspeople-meeting-doing-greeting-handshake-gesture-office-workspace_482257-101727.jpg',
       title: 'Discover New People',
     ),
   ];

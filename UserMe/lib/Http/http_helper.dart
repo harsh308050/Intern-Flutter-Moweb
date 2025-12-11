@@ -78,7 +78,6 @@ Future<dynamic> getMethod({
     return response;
   } catch (e) {
     log("GET ERROR $e");
-    rethrow;
   }
 }
 
@@ -106,7 +105,7 @@ Future<dynamic> deleteMethod(
       print('Error with Api and the status code is ${response.statusCode}');
     }
   } catch (e) {
-    print('DELETE Error: $e');
+    log('DELETE Error: $e');
   }
 }
 

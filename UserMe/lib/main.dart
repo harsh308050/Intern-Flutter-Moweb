@@ -15,6 +15,7 @@ import 'Utils/utils.dart';
 
 UserResModel? user;
 final navigatorKey = GlobalKey<NavigatorState>();
+final ThemeBloc themeBloc = ThemeBloc();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,8 +23,6 @@ void main() async {
   await NotificationService().init();
   runApp(MyApp());
 }
-
-final ThemeBloc themeBloc = ThemeBloc();
 
 class MyApp extends StatefulWidget {
   MyApp({super.key});

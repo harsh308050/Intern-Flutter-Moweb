@@ -26,11 +26,6 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   bool showNotificationSelector = false;
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(this.context).size.width;
     final height = MediaQuery.of(this.context).size.height;
@@ -57,6 +52,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
           ),
           body: RefreshIndicator(
+            color: UIColours.primaryColor,
             onRefresh: () async {
               allNotifications = AllNotifications.fromJson(
                 jsonDecode(sharedPrefGetData(sharedPrefKeys.notifications)),
@@ -64,6 +60,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             },
             child:
                 allNotifications.notifications == null ||
+                    allNotifications.notifications?.length == 0 ||
                     allNotifications.notifications!.isEmpty ||
                     allNotifications.notifications!
                         .where(
@@ -75,22 +72,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   ).isBefore(DateTime.now())),
                         )
                         .isEmpty
-                ? ListView.builder(
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
-                      return Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: height / 3),
-                          child: Text(
-                            "No Notifications Available",
-                            style: TextStyle(
-                              fontSize: UISizes.mainSpacing,
-                              fontWeight: FontWeight.w600,
-                            ),
+                ? ListView(
+                    children: [
+                      Center(
+                        child: Text(
+                          UIStrings.noNotificationsAvailable,
+                          style: TextStyle(
+                            fontSize: UISizes.mainSpacing,
+                            fontWeight: FontWeight.w600,
+                            color: UIColours.grey,
                           ),
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   )
                 : ListView.builder(
                     itemCount: allNotifications.notifications?.length,

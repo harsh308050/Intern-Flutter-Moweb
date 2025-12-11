@@ -42,7 +42,6 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   void initState() {
-    super.initState();
     if (widget.isFromNotificationTap == true) {
       callNextScreenWithResult(context, NotificationScreen()).then((value) {
         widget.isFromNotificationTap = value;
@@ -51,6 +50,12 @@ class _UserScreenState extends State<UserScreen> {
     getAllUsersBloc.add(getAllUsersEvent(skip: 0));
     searchFocusNode.unfocus();
     scrollController.addListener(scrollPosition);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   scrollPosition() {
