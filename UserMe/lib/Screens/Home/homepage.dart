@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../Components/CustomBottomAppBar.dart';
 import '../AllUser/AllUserScreen.dart';
 import '../User/SettingsScreen.dart';
+import '../Products/ProductsScreen.dart';
 
 class Homepage extends StatefulWidget {
   final bool? isFromNotificationTap;
@@ -20,6 +21,7 @@ class _HomepageState extends State<Homepage> {
 
     screen = [
       UserScreen(isFromNotificationTap: widget.isFromNotificationTap),
+      GraphScreen(),
       SettingsScreen(),
     ];
   }

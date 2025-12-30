@@ -45,12 +45,17 @@ class UIStrings {
   static String appbarEditProfile = "Edit Profile";
   static String appbarUsers = "Users";
   static String appbarSettings = "Settings";
+  static String appbarProducts = "Products";
+
   static String appbarNotification = "Notifications";
 
   static String tileProfile = "Profile";
   static String settingsGeneral = "GENERAL";
+  static String productsCategoryGraph = "PRODUCTS CATEGORY GRAPH";
+  static String productsStockGraph = "PRODUCTS STOCK GRAPH";
+
   static String settingsAccount = "ACCOUNT";
-  static String tileTheme = "Theme";
+  static String tileTheme = "THEME";
   static String tileLogout = "Logout";
   static String tileDelete = "Delete Account";
 
@@ -62,7 +67,7 @@ class UIStrings {
 }
 
 class UIColours {
-  static Color primaryColor = const Color(0xFF4a90e2);
+  static Color primaryColor = const Color.fromRGBO(74, 144, 226, 1);
   static Color grey = const Color(0xB3727272);
   static Color black = const Color.fromARGB(255, 0, 0, 0);
   static Color white = Colors.white;
@@ -96,6 +101,8 @@ class UISizes {
 
 class UIIcons {
   static Icon logoIcon = const Icon(Icons.settings, size: 50);
+
+  static Icon productsIcon = const Icon(Icons.auto_graph);
   static Icon emailIcon = const Icon(Icons.email_outlined);
   static Icon notificationIcon = Icon(Icons.notifications_active_outlined);
   static Icon passwordIcon = const Icon(Icons.lock_outline);

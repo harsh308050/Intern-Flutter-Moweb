@@ -29,6 +29,10 @@ class CustomBottomAppBar extends StatelessWidget {
           label: UIStrings.appbarUsers,
         ),
         BottomNavigationBarItem(
+          icon: UIIcons.productsIcon,
+          label: UIStrings.appbarProducts,
+        ),
+        BottomNavigationBarItem(
           icon: UIIcons.settingsIcon,
           label: UIStrings.appbarSettings,
         ),

@@ -1,11 +1,14 @@
 import 'package:UserMe/Components/CM.dart';
 import 'package:UserMe/Screens/Home/homepage.dart';
+import 'package:UserMe/Screens/Theme/Theme_colors.dart';
 import '../../Utils/extensions.dart';
 import '../../Utils/utils.dart';
 import 'package:flutter/material.dart';
 import '/main.dart';
 import '/utils/SharedPrefHelper.dart';
 import 'OnBoarding.dart';
+import '../../Utils/updateUI.dart';
+import '../../Utils/updateChecker.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,10 +20,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    initializePrefs();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initial();
+    });
   }
 
-  Future<void> initializePrefs() async {
+  Future<void> initial() async {
+    final currentVersion = await checkAppVersion();
+    final latestVersion = await getLatestAppVersion();
+    if (isUpdateAvailable(currentVersion, latestVersion)) {
+      final forceUpdate = isForceUpdate(currentVersion, latestVersion);
+      await showUpdateDialog(context, isForce: forceUpdate);
+      if (forceUpdate) return;
+    }
+    if (!mounted) return;
     await sharedPrefInit();
     String? userToken = sharedPrefGetToken();
     user = sharedPrefGetUser();
@@ -34,17 +47,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: UIColours.primaryColor,
-
-        child: Center(
-          child: Text(
-            'UserMe',
-            style: TextStyle(
-              fontSize: UISizes.titleFontSize,
-              fontWeight: FontWeight.bold,
-              color: UIColours.white,
-            ),
+      backgroundColor: AppTheme.lightTheme.primaryColor,
+      body: Center(
+        child: Text(
+          'UserMe',
+          style: TextStyle(
+            fontSize: UISizes.titleFontSize,
+            fontWeight: FontWeight.bold,
+            color: UIColours.white,
           ),
         ),
       ),

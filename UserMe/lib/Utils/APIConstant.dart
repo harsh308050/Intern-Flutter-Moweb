@@ -9,4 +9,7 @@ class APIConstant {
   static const String limit = "?limit=15";
   static const String skip = "skip=";
   static const String refreshToken = "auth/refresh";
+  static const String productCategories = "products/categories";
+  static const String productsByCategory = "products/category/";
+  static const String products = "products";
 }
